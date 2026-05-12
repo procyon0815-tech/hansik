@@ -541,7 +541,7 @@
             <p style="font-size:13px; color:var(--text3); margin-bottom:14px;">나만의 학습 기록을 저장합니다. 예시) 홍길동 / 3700 / 숫자 6자리</p>
             <div class="form-group">
                 <label class="form-label"><i class="fa-solid fa-user"></i> 이름</label>
-                <input type="text" id="join-name" class="form-control" placeholder="예: 홍길동">
+                <input type="text" id="join-name" class="form-control" placeholder="예: 홍길동" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
             </div>
             <div class="form-group">
                 <label class="form-label"><i class="fa-solid fa-id-badge"></i> 학번 (숫자 4자리)</label>
@@ -980,33 +980,41 @@ function handleLogin() {
 }
 
 function handleSignup() {
-    const name = document.getElementById('join-name').value.trim();
-    const id   = document.getElementById('join-id').value.trim();
-    const pwd  = document.getElementById('join-pwd').value.trim();
+    /* 한글 조합(IME) 완료 보장을 위해 blur 처리 후 값 읽기 */
+    document.getElementById('join-name').blur();
+    document.getElementById('join-id').blur();
+    document.getElementById('join-pwd').blur();
 
-    if (!name) { alert('이름을 입력하세요.'); return; }
-    if (!/^\d{4}$/.test(id))  { alert('학번은 숫자 4자리입니다.'); return; }
-    if (!/^\d{6}$/.test(pwd)) { alert('비밀번호는 숫자 6자리입니다.'); return; }
+    setTimeout(function() {
+        const name = document.getElementById('join-name').value.trim();
+        const id   = document.getElementById('join-id').value.trim();
+        const pwd  = document.getElementById('join-pwd').value.trim();
 
-    const db = getDB();
-    if (db.find(u => u.id === id)) { alert('이미 가입된 학번입니다.'); return; }
+        if (!name) { alert('이름을 입력하세요.'); return; }
+        if (name.length < 2) { alert('이름은 2자 이상 입력하세요.'); return; }
+        if (!/^\d{4}$/.test(id))  { alert('학번은 숫자 4자리입니다.'); return; }
+        if (!/^\d{6}$/.test(pwd)) { alert('비밀번호는 숫자 6자리입니다.'); return; }
 
-    const newUser = {
-        name, id, pwd,
-        totalQuestions: 0,
-        correctCount: 0,
-        wrongCount: 0,
-        studiedDishes: [],
-        lastStudyAt: null,
-        history: []
-    };
-    db.push(newUser);
-    saveDB(db);
-    alert(`${name} 학생, 가입을 환영합니다!\n이제 로그인하세요.`);
-    showScreen('screen-login');
-    document.getElementById('join-name').value = '';
-    document.getElementById('join-id').value = '';
-    document.getElementById('join-pwd').value = '';
+        const db = getDB();
+        if (db.find(u => u.id === id)) { alert('이미 가입된 학번입니다.'); return; }
+
+        const newUser = {
+            name, id, pwd,
+            totalQuestions: 0,
+            correctCount: 0,
+            wrongCount: 0,
+            studiedDishes: [],
+            lastStudyAt: null,
+            history: []
+        };
+        db.push(newUser);
+        saveDB(db);
+        alert(name + ' 학생, 가입을 환영합니다!\n이제 로그인하세요.');
+        showScreen('screen-login');
+        document.getElementById('join-name').value = '';
+        document.getElementById('join-id').value = '';
+        document.getElementById('join-pwd').value = '';
+    }, 100);
 }
 
 function logout() {
