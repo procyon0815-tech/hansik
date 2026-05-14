@@ -624,25 +624,40 @@
 
         <!-- 퀴즈 탭 -->
         <div id="quiz" class="content-section">
-            <!-- 시험시간 퀴즈 -->
-            <div class="quiz-box" id="quiz-time-container"></div>
-            <!-- 규격 퀴즈 -->
-            <div class="quiz-box" id="quiz-spec-container"></div>
-            <!-- 요구사항 퀴즈 -->
-            <div class="quiz-box" id="quiz-req-container"></div>
-            <!-- 유의사항 퀴즈 -->
-            <div class="quiz-box" id="quiz-check-container"></div>
-            <!-- 양념 비율 퀴즈 -->
-            <div class="quiz-box" id="quiz-seasoning-container"></div>
-
-            <!-- 조리 순서 -->
-            <div class="quiz-box">
+            <div class="card card-accent" style="margin-bottom:14px; padding:14px 18px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:14px; font-weight:700; color:var(--text2);">문제 풀이 진행</span>
+                    <span id="quiz-progress-text" style="font-size:14px; font-weight:900; color:var(--accent);">0 / 15</span>
+                </div>
+                <div class="progress-bar" style="margin-top:8px;">
+                    <div class="progress-fill" id="quiz-progress-bar" style="width:0%;"></div>
+                </div>
+                <div style="display:flex; justify-content:space-between; margin-top:8px;">
+                    <span style="font-size:12px; color:var(--green);">✅ 정답 <span id="quiz-correct-count">0</span></span>
+                    <span style="font-size:12px; color:var(--red);">❌ 오답 <span id="quiz-wrong-count">0</span></span>
+                </div>
+            </div>
+            <div id="quiz-questions-wrap"></div>
+            <div class="quiz-box" id="quiz-seq-box">
                 <div class="quiz-title"><i class="fa-solid fa-arrow-down-1-9"></i> 조리 순서 맞추기</div>
                 <p class="quiz-hint">섞여있는 과정을 올바른 순서대로 터치하세요.</p>
                 <div id="options-container"></div>
                 <ul class="answer-list" id="answer-list"></ul>
                 <div id="seq-result" class="quiz-result"></div>
-                <button class="retry-study-btn" id="seq-retry-btn" onclick="showReview('seq')"><i class="fa-solid fa-rotate-left"></i> 순서 틀렸습니다 → 이론 다시 보기</button>
+                <button class="retry-study-btn" id="seq-retry-btn" onclick="showReview('seq')">
+                    <i class="fa-solid fa-rotate-left"></i> 순서 틀렸습니다 → 이론 다시 보기
+                </button>
+            </div>
+            <div class="card" id="quiz-final-result" style="display:none; text-align:center; margin-top:10px;">
+                <div style="font-size:32px; margin-bottom:8px;" id="quiz-final-emoji">🎉</div>
+                <div style="font-size:20px; font-weight:900; color:#fff;" id="quiz-final-score"></div>
+                <div style="font-size:14px; color:var(--text2); margin-top:6px;" id="quiz-final-msg"></div>
+                <button class="btn btn-primary" onclick="renderQuizTab()" style="margin-top:14px;">
+                    <i class="fa-solid fa-rotate"></i> 다시 풀기 (문제 새로 섞기)
+                </button>
+                <button class="btn btn-outline" onclick="switchTab('study')" style="margin-top:8px;">
+                    <i class="fa-solid fa-book-open"></i> 이론 다시 보기
+                </button>
             </div>
         </div>
     </div>
@@ -1285,39 +1300,124 @@ function extractSeasoningSteps(dish) {
 }
 
 function renderQuizTab() {
-    /* ── 1. 시험 시간 ── */
-    buildMCQSmart('quiz-time-container', '⏱ 시험 시간 고르기',
-        currentDish.t, currentDish, '시험시간',
-        `<strong>${currentDish.n}</strong>의 시험 시간은?`);
+    /* ═══ 15문제 풀세트 생성 ═══
+       유형별 문제 수:
+       - 시험시간   1문제
+       - 규격       2문제 (숫자 변형으로 다른 보기)
+       - 요구사항   3문제 (항목별 1문제씩)
+       - 유의사항   3문제 (항목별 1문제씩)
+       - 양념비율   3문제 (조리순서 양념문장별)
+       - 조리순서   1문제 (순서맞추기)
+       = 합계 13 객관식 + 1 순서 = 14문제 → 부족분은 추가 변형으로 15문제 채움
+    ═══════════════════════════════════ */
 
-    /* ── 2. 규격 ── */
-    buildMCQSmart('quiz-spec-container', '📐 완성 규격 고르기',
-        currentDish.s, currentDish, '규격',
-        `<strong>${currentDish.n}</strong>의 완성 규격(크기)으로 올바른 것은?`);
+    /* 진행 상태 초기화 */
+    let quizTotal = 0, quizCorrect = 0, quizWrong = 0;
 
-    /* ── 3. 요구사항 ── */
-    const req = currentDish.r && currentDish.r.length > 0
-        ? currentDish.r[Math.floor(Math.random() * currentDish.r.length)] : null;
-    buildMCQSmart('quiz-req-container', '📋 요구사항 찾기',
-        req, currentDish, '요구사항',
-        `다음 중 <strong>${currentDish.n}</strong>의 올바른 요구사항은?`);
+    function updateProgress() {
+        const pct = quizTotal > 0 ? Math.round((quizTotal / 15) * 100) : 0;
+        const pt = document.getElementById('quiz-progress-text');
+        const pb = document.getElementById('quiz-progress-bar');
+        const cc = document.getElementById('quiz-correct-count');
+        const wc = document.getElementById('quiz-wrong-count');
+        if (pt) pt.textContent = quizTotal + ' / 15';
+        if (pb) pb.style.width = pct + '%';
+        if (cc) cc.textContent = quizCorrect;
+        if (wc) wc.textContent = quizWrong;
 
-    /* ── 4. 유의사항 ── */
-    const chk = currentDish.c && currentDish.c.length > 0
-        ? currentDish.c[Math.floor(Math.random() * currentDish.c.length)] : null;
-    buildMCQSmart('quiz-check-container', '⚠️ 유의사항 찾기',
-        chk, currentDish, '유의사항',
-        `다음 중 <strong>${currentDish.n}</strong>의 올바른 유의사항은?`);
+        if (quizTotal >= 15) {
+            const fr = document.getElementById('quiz-final-result');
+            const fs = document.getElementById('quiz-final-score');
+            const fm = document.getElementById('quiz-final-msg');
+            const fe = document.getElementById('quiz-final-emoji');
+            if (fr) {
+                fr.style.display = 'block';
+                fr.scrollIntoView({ behavior: 'smooth' });
+            }
+            const pctC = Math.round((quizCorrect / 15) * 100);
+            if (fs) fs.textContent = '15문제 중 ' + quizCorrect + '문제 정답  (' + pctC + '%)';
+            if (fe) fe.textContent = pctC >= 80 ? '🏆' : pctC >= 60 ? '👍' : '📚';
+            if (fm) fm.textContent = pctC >= 80 ? '훌륭합니다! 이 품목은 완벽하게 숙지했습니다.' :
+                                     pctC >= 60 ? '좋아요! 틀린 문제를 이론에서 다시 확인하세요.' :
+                                                  '이론 탭에서 내용을 다시 학습해보세요.';
+        }
+    }
 
-    /* ── 5. 양념 비율 ── */
+    /* 문제 컨테이너 초기화 */
+    const wrap = document.getElementById('quiz-questions-wrap');
+    wrap.innerHTML = '';
+    document.getElementById('quiz-final-result').style.display = 'none';
+    quizTotal = 0; quizCorrect = 0; quizWrong = 0;
+    updateProgress();
+
+    /* 문제 목록 구성 */
+    const questions = [];
+
+    /* 1. 시험 시간 (1문제) */
+    questions.push({ type:'시험시간', title:'⏱ 시험 시간', correct: currentDish.t,
+        q:`<strong>${currentDish.n}</strong>의 시험 시간은?` });
+
+    /* 2. 규격 (2문제 - 변형 2회) */
+    questions.push({ type:'규격', title:'📐 완성 규격 ①', correct: currentDish.s,
+        q:`<strong>${currentDish.n}</strong>의 완성 규격(크기)으로 올바른 것은?` });
+    if (currentDish.s) {
+        const s2 = mutateNumbers(currentDish.s) || currentDish.s;
+        questions.push({ type:'규격', title:'📐 완성 규격 ②', correct: currentDish.s,
+            q:`다음 보기 중 <strong>${currentDish.n}</strong>의 정확한 크기 기준은?` });
+    }
+
+    /* 3. 요구사항 (최대 3문제 - 항목마다 1문제) */
+    const reqs = currentDish.r || [];
+    const reqPick = [...reqs].sort(() => Math.random() - 0.5).slice(0, 3);
+    reqPick.forEach((r, i) => {
+        questions.push({ type:'요구사항', title:`📋 요구사항 ${i+1}`, correct: r,
+            q:`다음 중 <strong>${currentDish.n}</strong>의 올바른 요구사항은?` });
+    });
+
+    /* 4. 유의사항 (최대 3문제) */
+    const chks = currentDish.c || [];
+    const chkPick = [...chks].sort(() => Math.random() - 0.5).slice(0, 3);
+    chkPick.forEach((c, i) => {
+        questions.push({ type:'유의사항', title:`⚠️ 유의사항 ${i+1}`, correct: c,
+            q:`다음 중 <strong>${currentDish.n}</strong>의 올바른 유의사항은?` });
+    });
+
+    /* 5. 양념 비율 (최대 3문제) */
     const seasonings = extractSeasoningSteps(currentDish);
-    const correctSeasoning = seasonings.length > 0
-        ? seasonings[Math.floor(Math.random() * seasonings.length)] : null;
-    buildMCQSmart('quiz-seasoning-container', '🧂 양념 비율 / 재료 찾기',
-        correctSeasoning, currentDish, '양념비율',
-        `다음 중 <strong>${currentDish.n}</strong>의 올바른 양념/재료 내용은?`);
+    const seaPick = [...seasonings].sort(() => Math.random() - 0.5).slice(0, 3);
+    seaPick.forEach((s, i) => {
+        questions.push({ type:'양념비율', title:`🧂 양념/재료 ${i+1}`, correct: s,
+            q:`다음 중 <strong>${currentDish.n}</strong>의 올바른 양념·재료 내용은?` });
+    });
 
-    /* ── 6. 조리 순서 맞추기 ── */
+    /* 문제 수 부족 시 조리순서 문장으로 보완 (15문제 목표, 순서문제 제외 14문제) */
+    const stepSentences = [...(currentDish.q || [])].sort(() => Math.random() - 0.5);
+    let extraIdx = 0;
+    while (questions.length < 14 && extraIdx < stepSentences.length) {
+        const sent = stepSentences[extraIdx++];
+        questions.push({ type:'조리내용', title:`🍳 조리 내용 ${extraIdx}`, correct: sent,
+            q:`다음 중 <strong>${currentDish.n}</strong> 조리 과정으로 올바른 것은?` });
+    }
+
+    /* 문제 섞기 */
+    questions.sort(() => Math.random() - 0.5);
+
+    /* 각 문제 렌더링 */
+    questions.slice(0, 14).forEach((qObj, idx) => {
+        const cid = 'qbox-' + idx;
+        const box = document.createElement('div');
+        box.className = 'quiz-box';
+        box.id = cid;
+        wrap.appendChild(box);
+        buildMCQSmart(cid, `Q${idx+1}. ${qObj.title}`, qObj.correct, currentDish, qObj.type, qObj.q,
+            function(isCorrect) {
+                quizTotal++;
+                if (isCorrect) quizCorrect++; else quizWrong++;
+                updateProgress();
+            });
+    });
+
+    /* 조리 순서 맞추기 (Q15) */
     expectedStep = 0;
     currentSequence = [...(currentDish.q || [])];
     document.getElementById('answer-list').innerHTML = '';
@@ -1327,19 +1427,25 @@ function renderQuizTab() {
     seqRes.style.display = 'none';
     document.getElementById('seq-retry-btn').style.display = 'none';
 
-    const wrap = document.getElementById('options-container');
-    wrap.innerHTML = '';
+    const seqBox = document.getElementById('quiz-seq-box');
+    const seqTitle = seqBox.querySelector('.quiz-title');
+    if (seqTitle) seqTitle.innerHTML = `<i class="fa-solid fa-arrow-down-1-9"></i> Q${Math.min(questions.length+1,15)}. 🔢 조리 순서 맞추기`;
+
+    const optWrap = document.getElementById('options-container');
+    optWrap.innerHTML = '';
     [...currentSequence].sort(() => Math.random() - 0.5).forEach(step => {
         const btn = document.createElement('button');
         btn.className = 'step-btn';
         btn.innerHTML = hl(step);
-        btn.onclick = () => checkSequence(btn, step);
-        wrap.appendChild(btn);
+        btn.onclick = () => checkSequence(btn, step, function(isCorrect) {
+            if (isCorrect) { quizTotal++; quizCorrect++; updateProgress(); }
+        });
+        optWrap.appendChild(btn);
     });
 }
 
 /* ─── buildMCQSmart: 같은 품목 변형 오답 사용 ─── */
-function buildMCQSmart(containerId, title, correct, dish, type, questionText) {
+function buildMCQSmart(containerId, title, correct, dish, type, questionText, onAnswered) {
     const box = document.getElementById(containerId);
     if (!box) return;
     if (!correct) {
@@ -1371,6 +1477,10 @@ function buildMCQSmart(containerId, title, correct, dish, type, questionText) {
         return `<button class="mcq-btn" data-correct="${isOk}"
             onclick="handleMCQ(this,'${safeType}','${containerId}')">${hl(opt)}</button>`;
     }).join('');
+
+    /* 콜백 전역 맵에 저장 */
+    if (onAnswered) window._quizCbs = window._quizCbs || {};
+    if (onAnswered) window._quizCbs[containerId] = onAnswered;
 
     box.innerHTML = `
         <div class="quiz-title">${title}</div>
@@ -1415,6 +1525,7 @@ function handleMCQ(btn, type, containerId) {
         resEl.className = 'quiz-result ok';
         resEl.style.display = 'block';
         recordAnswer(true, type);
+        if (window._quizCbs && window._quizCbs[containerId]) window._quizCbs[containerId](true);
     } else {
         btn.classList.add('wrong');
         resEl.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> 오답입니다. 아래 버튼으로 이론을 확인하세요.';
@@ -1422,6 +1533,7 @@ function handleMCQ(btn, type, containerId) {
         resEl.style.display = 'block';
         if (retryBtn) retryBtn.style.display = 'block';
         recordAnswer(false, type);
+        if (window._quizCbs && window._quizCbs[containerId]) window._quizCbs[containerId](false);
     }
 }
 
@@ -1444,7 +1556,7 @@ function showReview(id) {
     }
 }
 
-function checkSequence(btn, step) {
+function checkSequence(btn, step, seqCb) {
     if (btn.classList.contains('used')) return;
     if (step === currentSequence[expectedStep]) {
         btn.classList.add('used');
