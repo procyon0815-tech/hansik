@@ -1,142 +1,53 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>한식 실기 마스터 v6.0</title>
+    <title>한식 실기 마스터 v7.0</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
-
     <style>
         :root {
-            --bg: #0f1117;
-            --bg2: #171923;
-            --bg3: #1e2130;
-            --card: #242838;
-            --border: #2e3450;
-            --accent: #5b9cf6;
-            --accent2: #7c6ff7;
-            --green: #4ade80;
-            --red: #f87171;
-            --orange: #fb923c;
-            --yellow: #fbbf24;
-            --text: #e2e8f0;
-            --text2: #94a3b8;
-            --text3: #64748b;
-            --danger-bg: #2a1a1a;
-            --danger-border: #5a2020;
+            --bg: #0f1117; --bg2: #171923; --bg3: #1e2130;
+            --card: #242838; --border: #2e3450;
+            --accent: #5b9cf6; --accent2: #7c6ff7;
+            --green: #4ade80; --red: #f87171;
+            --orange: #fb923c; --yellow: #fbbf24;
+            --text: #e2e8f0; --text2: #94a3b8; --text3: #64748b;
+            --danger-bg: #2a1a1a; --danger-border: #5a2020;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Noto Sans KR', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            padding: 12px;
-            line-height: 1.7;
-            word-break: keep-all;
-            overflow-wrap: break-word;
+            background: var(--bg); color: var(--text);
+            min-height: 100vh; padding: 12px;
+            line-height: 1.7; word-break: keep-all; overflow-wrap: break-word;
         }
-        .app {
-            max-width: 720px;
-            margin: 0 auto;
-        }
-        .app-header {
-            text-align: center;
-            padding: 20px 0 16px;
-            border-bottom: 1px solid var(--border);
-            margin-bottom: 20px;
-        }
-        .app-header h1 {
-            font-size: 22px;
-            font-weight: 900;
-            color: #fff;
-            letter-spacing: -0.5px;
-        }
-        .app-header p {
-            font-size: 12px;
-            color: var(--text3);
-            margin-top: 4px;
-        }
-
-        /* ── 화면 전환 ── */
+        .app { max-width: 720px; margin: 0 auto; }
+        .app-header { text-align: center; padding: 20px 0 16px; border-bottom: 1px solid var(--border); margin-bottom: 20px; }
+        .app-header h1 { font-size: 22px; font-weight: 900; color: #fff; letter-spacing: -0.5px; }
+        .app-header p { font-size: 12px; color: var(--text3); margin-top: 4px; }
         .screen { display: none; }
         .screen.active { display: block; animation: fadeUp 0.25s ease; }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(8px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        /* ── 공통 카드 ── */
-        .card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 18px 20px;
-            margin-bottom: 14px;
-        }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+        .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 14px; }
         .card-accent { border-left: 4px solid var(--accent); }
         .card-green  { border-left: 4px solid var(--green); }
         .card-red    { border-left: 4px solid var(--red); background: var(--danger-bg); border-color: var(--danger-border); }
         .card-orange { border-left: 4px solid var(--orange); }
         .card-purple { border-left: 4px solid var(--accent2); }
-
-        .card-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+        .card-title { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
         .card-title i { color: var(--accent); font-size: 16px; }
         .card-title.green i { color: var(--green); }
         .card-title.red i { color: var(--red); }
         .card-title.orange i { color: var(--orange); }
-
-        /* ── 입력 폼 ── */
         .form-group { margin-bottom: 14px; }
-        .form-label {
-            display: block;
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 7px;
-        }
-        .form-control {
-            width: 100%;
-            padding: 13px 14px;
-            background: var(--bg3);
-            border: 1.5px solid var(--border);
-            border-radius: 9px;
-            color: var(--text);
-            font-size: 16px;
-            font-family: 'Noto Sans KR', sans-serif;
-            font-weight: 500;
-            transition: border-color 0.2s;
-        }
-        .form-control:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(91,156,246,0.15);
-        }
+        .form-label { display: block; font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 7px; }
+        .form-control { width: 100%; padding: 13px 14px; background: var(--bg3); border: 1.5px solid var(--border); border-radius: 9px; color: var(--text); font-size: 16px; font-family: 'Noto Sans KR', sans-serif; font-weight: 500; transition: border-color 0.2s; }
+        .form-control:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(91,156,246,0.15); }
         .form-control::placeholder { color: var(--text3); font-weight: 400; }
-
-        /* ── 버튼 ── */
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 14px 16px;
-            border: none;
-            border-radius: 9px;
-            font-size: 16px;
-            font-weight: 700;
-            font-family: 'Noto Sans KR', sans-serif;
-            cursor: pointer;
-            transition: all 0.18s;
-            margin-top: 10px;
-        }
+        select.form-control { font-weight: 700; color: var(--accent); cursor: pointer; }
+        .btn { display: block; width: 100%; padding: 14px 16px; border: none; border-radius: 9px; font-size: 16px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; transition: all 0.18s; margin-top: 10px; }
         .btn:active { transform: scale(0.98); }
         .btn-primary { background: var(--accent); color: #0f1117; }
         .btn-primary:hover { background: #4a87e8; }
@@ -145,423 +56,170 @@
         .btn-outline { background: transparent; border: 1.5px solid var(--accent); color: var(--accent); }
         .btn-outline:hover { background: rgba(91,156,246,0.12); }
         .btn-danger { background: var(--red); color: #fff; }
-        .btn-danger:hover { background: #ef4444; }
         .btn-green { background: var(--green); color: #0f1117; }
-        .btn-green:hover { background: #22c55e; }
         .btn-purple { background: var(--accent2); color: #fff; }
-        .btn-small {
-            display: inline-block;
-            width: auto;
-            padding: 8px 14px;
-            font-size: 13px;
-            margin-top: 0;
-        }
-
-        /* ── 통계 그리드 ── */
-        .stat-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-top: 14px;
-        }
-        .stat-box {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 14px;
-            text-align: center;
-        }
+        .btn-small { display: inline-block; width: auto; padding: 8px 14px; font-size: 13px; margin-top: 0; }
+        .btn-ox { display: inline-block; width: calc(50% - 5px); padding: 16px 8px; font-size: 18px; font-weight: 900; margin-top: 0; border: none; border-radius: 9px; cursor: pointer; font-family: 'Noto Sans KR', sans-serif; transition: all 0.18s; }
+        .btn-ox:active { transform: scale(0.96); }
+        .btn-ox-o { background: #0d2a1a; border: 2px solid var(--green); color: var(--green); }
+        .btn-ox-x { background: #2a0d0d; border: 2px solid var(--red); color: var(--red); }
+        .btn-ox-o:hover:not(:disabled) { background: #1a4a2a; }
+        .btn-ox-x:hover:not(:disabled) { background: #4a1a1a; }
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+        .stat-box { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 14px; text-align: center; }
         .stat-label { font-size: 12px; color: var(--text3); font-weight: 500; }
-        .stat-value {
-            display: block;
-            font-size: 26px;
-            font-weight: 900;
-            color: var(--accent);
-            margin-top: 4px;
-        }
+        .stat-value { display: block; font-size: 26px; font-weight: 900; color: var(--accent); margin-top: 4px; }
         .stat-value.green { color: var(--green); }
         .stat-value.red   { color: var(--red); }
-
-        /* ── 탭 ── */
-        .tabs {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-        .tab-btn {
-            flex: 1;
-            padding: 13px 8px;
-            background: var(--bg3);
-            border: 1.5px solid var(--border);
-            border-radius: 9px;
-            color: var(--text2);
-            font-size: 14px;
-            font-weight: 700;
-            font-family: 'Noto Sans KR', sans-serif;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .tab-btn.active {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #0f1117;
-        }
-
+        .tabs { display: flex; gap: 8px; margin-bottom: 20px; }
+        .tab-btn { flex: 1; padding: 13px 8px; background: var(--bg3); border: 1.5px solid var(--border); border-radius: 9px; color: var(--text2); font-size: 14px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; transition: all 0.2s; }
+        .tab-btn.active { background: var(--accent); border-color: var(--accent); color: #0f1117; }
         .content-section { display: none; }
         .content-section.active { display: block; animation: fadeUp 0.2s; }
-
-        /* ── 목록 스타일 ── */
-        .study-list {
-            padding-left: 0;
-            list-style: none;
-        }
-        .study-list li {
-            padding: 10px 0 10px 18px;
-            border-bottom: 1px solid var(--border);
-            font-size: 15px;
-            line-height: 1.75;
-            position: relative;
-            color: var(--text);
-        }
+        .study-list { padding-left: 0; list-style: none; }
+        .study-list li { padding: 10px 0 10px 18px; border-bottom: 1px solid var(--border); font-size: 15px; line-height: 1.75; position: relative; color: var(--text); }
         .study-list li:last-child { border-bottom: none; }
-        .study-list li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: var(--accent);
-            font-weight: 900;
-        }
+        .study-list li::before { content: "•"; position: absolute; left: 0; color: var(--accent); font-weight: 900; }
         ol.study-list { list-style: none; counter-reset: step-counter; }
         ol.study-list li { counter-increment: step-counter; padding-left: 32px; }
-        ol.study-list li::before {
-            content: counter(step-counter);
-            position: absolute;
-            left: 0;
-            width: 22px;
-            height: 22px;
-            background: var(--accent);
-            color: #0f1117;
-            border-radius: 50%;
-            font-size: 11px;
-            font-weight: 900;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            top: 12px;
-        }
+        ol.study-list li::before { content: counter(step-counter); position: absolute; left: 0; width: 22px; height: 22px; background: var(--accent); color: #0f1117; border-radius: 50%; font-size: 11px; font-weight: 900; display: flex; align-items: center; justify-content: center; top: 12px; }
         .card-red .study-list li::before { color: var(--red); background: none; }
         .card-red ol.study-list li::before { background: var(--red); color: #fff; }
+        .hl { background: #2a2a00; color: var(--yellow); font-weight: 700; padding: 1px 5px; border-radius: 3px; font-size: 0.95em; }
 
-        /* ── 형광펜 ── */
-        .hl {
-            background: #2a2a00;
-            color: var(--yellow);
-            font-weight: 700;
-            padding: 1px 5px;
-            border-radius: 3px;
-            font-size: 0.95em;
-        }
-
-        /* ── 퀴즈 ── */
-        .quiz-box {
-            background: var(--bg3);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 18px;
-            margin-bottom: 16px;
-        }
-        .quiz-title {
-            font-size: 15px;
-            font-weight: 700;
-            color: var(--accent);
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 7px;
-        }
-        .quiz-hint {
-            font-size: 12px;
-            color: var(--text3);
-            margin-bottom: 14px;
-        }
-        .mcq-wrap { display: block; }
-        .mcq-btn {
-            display: block;
-            width: 100%;
-            margin: 8px 0;
-            padding: 14px 16px;
-            background: var(--bg2);
-            border: 1.5px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 15px;
-            font-weight: 500;
-            font-family: 'Noto Sans KR', sans-serif;
-            text-align: left;
-            cursor: pointer;
-            transition: all 0.18s;
-            line-height: 1.6;
-            word-break: keep-all;
-        }
+        /* ── 퀴즈 공통 ── */
+        .quiz-box { background: var(--bg3); border: 1px solid var(--border); border-radius: 12px; padding: 18px; margin-bottom: 16px; }
+        .quiz-type-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; margin-bottom: 10px; }
+        .badge-mcq    { background: rgba(91,156,246,0.2);  color: var(--accent); }
+        .badge-ox     { background: rgba(74,222,128,0.15); color: var(--green); }
+        .badge-fill   { background: rgba(251,146,60,0.15); color: var(--orange); }
+        .badge-order  { background: rgba(124,111,247,0.15); color: var(--accent2); }
+        .quiz-question { font-size: 15px; font-weight: 700; color: #fff; margin-bottom: 14px; line-height: 1.7; }
+        .quiz-result { display: none; padding: 12px 16px; border-radius: 8px; font-weight: 700; font-size: 14px; margin-top: 10px; }
+        .quiz-result.ok { background: #0d2a1a; color: var(--green); display: block; }
+        .quiz-result.ng { background: #2a0d0d; color: var(--red); display: block; }
+        /* 4지선다 */
+        .mcq-btn { display: block; width: 100%; margin: 8px 0; padding: 14px 16px; background: var(--bg2); border: 1.5px solid var(--border); border-radius: 8px; color: var(--text); font-size: 14px; font-weight: 500; font-family: 'Noto Sans KR', sans-serif; text-align: left; cursor: pointer; transition: all 0.18s; line-height: 1.6; word-break: keep-all; }
         .mcq-btn:hover:not(:disabled) { border-color: var(--accent); background: var(--card); }
         .mcq-btn.correct { background: #0d2a1a !important; border-color: var(--green) !important; color: var(--green) !important; font-weight: 700; }
-        .mcq-btn.wrong   { background: #2a0d0d !important; border-color: var(--red) !important; color: var(--red) !important; }
+        .mcq-btn.wrong   { background: #2a0d0d !important; border-color: var(--red)   !important; color: var(--red)   !important; }
         .mcq-btn.reveal  { border-color: var(--green) !important; color: var(--green) !important; opacity: 0.7; }
+        /* OX */
+        .ox-wrap { display: flex; gap: 10px; margin-top: 10px; }
+        /* 빈칸 */
+        .fill-input { width: 100%; padding: 12px 14px; background: var(--bg2); border: 1.5px solid var(--border); border-radius: 8px; color: var(--text); font-size: 16px; font-family: 'Noto Sans KR', sans-serif; margin-top: 10px; }
+        .fill-input:focus { outline: none; border-color: var(--orange); box-shadow: 0 0 0 3px rgba(251,146,60,0.15); }
+        .fill-submit { display: block; width: 100%; margin-top: 10px; padding: 13px; background: var(--orange); color: #0f1117; border: none; border-radius: 8px; font-size: 15px; font-weight: 700; font-family: 'Noto Sans KR', sans-serif; cursor: pointer; }
+        .fill-submit:hover { background: #f97316; }
+        .fill-answer-reveal { display: none; margin-top: 10px; padding: 12px 16px; background: #1a1a00; border: 1px solid var(--yellow); border-radius: 8px; font-size: 14px; color: var(--yellow); }
+        /* 순서맞추기 */
+        .step-btn { display: block; width: 100%; margin: 7px 0; padding: 13px 15px; background: var(--bg2); border: 1.5px solid var(--accent2); border-radius: 8px; color: var(--text); font-size: 14px; font-weight: 500; font-family: 'Noto Sans KR', sans-serif; text-align: left; cursor: pointer; line-height: 1.6; word-break: keep-all; transition: all 0.18s; }
+        .step-btn:hover:not(.used):not(:disabled) { background: var(--card); border-color: var(--yellow); }
+        .step-btn.used { opacity: 0.3; text-decoration: line-through; pointer-events: none; }
+        .step-btn.wrong-step { border-color: var(--red) !important; background: #2a0d0d !important; }
+        .answer-slots { margin-top: 14px; }
+        .answer-slot { padding: 9px 14px 9px 40px; background: #0d1a0d; border: 1px solid #1a3a1a; border-radius: 7px; margin-bottom: 6px; font-size: 14px; color: var(--green); position: relative; line-height: 1.6; }
+        .answer-slot::before { content: attr(data-num); position: absolute; left: 12px; top: 10px; font-weight: 900; color: var(--green); font-size: 13px; }
+        /* 정답 패널 */
+        .answer-panel { display: none; margin-top: 10px; padding: 14px; background: #1a1400; border: 1px solid var(--yellow); border-radius: 8px; }
+        .answer-panel.show { display: block; animation: fadeUp 0.2s; }
+        .answer-panel-title { font-size: 12px; font-weight: 700; color: var(--yellow); margin-bottom: 8px; }
+        .answer-panel p { font-size: 14px; color: var(--text); line-height: 1.75; }
 
-        .quiz-result {
-            display: none;
-            padding: 12px 16px;
-            border-radius: 8px;
-            font-weight: 700;
-            font-size: 15px;
-            margin-top: 10px;
-            text-align: center;
-        }
-        .quiz-result.ok  { background: #0d2a1a; color: var(--green); }
-        .quiz-result.ng  { background: #2a0d0d; color: var(--red); }
-
-        /* 오답 재학습 버튼 */
-        .retry-study-btn {
-            display: none;
-            margin-top: 10px;
-            padding: 10px 14px;
-            background: #2a1a00;
-            border: 1px solid var(--orange);
-            border-radius: 8px;
-            color: var(--orange);
-            font-size: 13px;
-            font-weight: 700;
-            font-family: 'Noto Sans KR', sans-serif;
-            cursor: pointer;
-            width: 100%;
-        }
-        .retry-study-btn:hover { background: #3a2800; }
-
-        /* 순서 맞추기 */
-        .step-btn {
-            display: block;
-            width: 100%;
-            margin: 7px 0;
-            padding: 13px 15px;
-            background: var(--bg2);
-            border: 1.5px solid var(--orange);
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 14px;
-            font-weight: 500;
-            font-family: 'Noto Sans KR', sans-serif;
-            text-align: left;
-            cursor: pointer;
-            line-height: 1.6;
-            word-break: keep-all;
-            transition: all 0.18s;
-        }
-        .step-btn:hover:not(.used) { background: var(--card); border-color: var(--yellow); }
-        .step-btn.used { opacity: 0.35; text-decoration: line-through; pointer-events: none; }
-
-        .answer-list {
-            list-style: none;
-            counter-reset: ans;
-            padding: 0;
-            margin-top: 14px;
-        }
-        .answer-list li {
-            counter-increment: ans;
-            padding: 8px 12px 8px 36px;
-            background: #0d1a0d;
-            border: 1px solid #1a3a1a;
-            border-radius: 7px;
-            margin-bottom: 6px;
-            font-size: 14px;
-            color: var(--green);
-            position: relative;
-            line-height: 1.6;
-        }
-        .answer-list li::before {
-            content: counter(ans);
-            position: absolute;
-            left: 10px;
-            top: 9px;
-            font-weight: 900;
-            color: var(--green);
-            font-size: 13px;
-        }
-
-        /* ── 상단 바 (학습 화면) ── */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 10px 14px;
-            margin-bottom: 14px;
-        }
+        /* ── 진행 바 ── */
+        .progress-section { margin-top: 10px; }
+        .progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--text3); margin-bottom: 5px; }
+        .progress-bar { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; }
+        .progress-fill { height: 100%; background: var(--accent); border-radius: 99px; transition: width 0.4s ease; }
+        /* ── 상단바 ── */
+        .top-bar { display: flex; justify-content: space-between; align-items: center; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; margin-bottom: 14px; }
         .top-bar-user { font-size: 14px; font-weight: 700; color: var(--accent); }
-
-        /* ── 셀렉트 ── */
-        select.form-control {
-            font-weight: 700;
-            color: var(--accent);
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        /* ── 관리자 테이블 ── */
+        /* ── 퀴즈 헤더 ── */
+        .quiz-header { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; margin-bottom: 14px; }
+        .quiz-header-row { display: flex; justify-content: space-between; align-items: center; }
+        .quiz-score-row { display: flex; justify-content: space-between; margin-top: 8px; }
+        /* ── 최종 결과 ── */
+        .final-result-card { display: none; text-align: center; margin-top: 10px; }
+        .final-emoji { font-size: 48px; margin-bottom: 12px; }
+        .final-score { font-size: 24px; font-weight: 900; color: #fff; }
+        .final-msg { font-size: 14px; color: var(--text2); margin-top: 6px; }
+        .type-summary { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+        .type-cell { background: var(--bg3); border: 1px solid var(--border); border-radius: 8px; padding: 10px; text-align: center; }
+        .type-cell-label { font-size: 11px; color: var(--text3); }
+        .type-cell-val { font-size: 18px; font-weight: 900; margin-top: 2px; }
+        /* ── 관리자 ── */
         .table-wrap { overflow-x: auto; margin-top: 14px; }
         table { width: 100%; border-collapse: collapse; font-size: 13px; }
         th, td { border: 1px solid var(--border); padding: 9px 10px; text-align: center; white-space: nowrap; }
         th { background: var(--bg3); color: var(--accent); font-weight: 700; cursor: pointer; }
         th:hover { background: var(--card); }
         td { color: var(--text2); }
-
-        /* ── 배지 ── */
-        .badge {
-            display: inline-block;
-            padding: 3px 9px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-        }
+        .badge { display: inline-block; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; }
         .badge-green { background: #0d2a1a; color: var(--green); }
         .badge-red   { background: #2a0d0d; color: var(--red); }
-        .badge-accent { background: rgba(91,156,246,0.15); color: var(--accent); }
-
-        /* ── 진행 상황 표시 ── */
-        .progress-section {
-            margin-top: 10px;
-        }
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            font-size: 12px;
-            color: var(--text3);
-            margin-bottom: 5px;
-        }
-        .progress-bar {
-            height: 6px;
-            background: var(--border);
-            border-radius: 99px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: var(--accent);
-            border-radius: 99px;
-            transition: width 0.4s ease;
-        }
-
-        /* ── 소시지 하단 ── */
-        .secret-admin {
-            text-align: center;
-            margin-top: 28px;
-            font-size: 11px;
-            color: var(--text3);
-            cursor: pointer;
-            padding: 8px;
-            opacity: 0.4;
-        }
+        .secret-admin { text-align: center; margin-top: 28px; font-size: 11px; color: var(--text3); cursor: pointer; padding: 8px; opacity: 0.4; }
         .secret-admin:hover { opacity: 0.8; }
-
-        /* ── 모달 (관리자 로그인) ── */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-        }
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; }
         .modal-overlay.active { display: flex; }
-        .modal {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 24px;
-            width: 90%;
-            max-width: 360px;
-            animation: fadeUp 0.2s;
-        }
+        .modal { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; width: 90%; max-width: 360px; animation: fadeUp 0.2s; }
         .modal h3 { font-size: 17px; font-weight: 700; color: #fff; margin-bottom: 16px; }
-
-        /* ── 학습 팝업 (오답 재학습) ── */
-        .review-panel {
-            display: none;
-            background: var(--bg2);
-            border: 1.5px solid var(--orange);
-            border-radius: 10px;
-            padding: 16px;
-            margin-top: 10px;
-        }
-        .review-panel.active { display: block; animation: fadeUp 0.2s; }
-        .review-panel-title {
-            font-size: 13px;
-            font-weight: 700;
-            color: var(--orange);
-            margin-bottom: 10px;
-        }
-        .review-panel p {
-            font-size: 14px;
-            color: var(--text);
-            line-height: 1.75;
-        }
+        /* 문제 번호 배지 */
+        .q-num { display: inline-block; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 3px 10px; font-size: 12px; color: var(--text3); margin-bottom: 8px; }
     </style>
 </head>
 <body>
 <div class="app">
     <div class="app-header">
         <h1><i class="fa-solid fa-fire-burner"></i> 한식 실기 마스터</h1>
-        <p>한국조리기능사 실기 33품목 완벽 대비</p>
+        <p>한국조리기능사 실기 33품목 · 품목당 60문제 완전 랜덤 출제</p>
     </div>
 
-    <!-- ===== 로그인 ===== -->
+    <!-- 로그인 -->
     <div id="screen-login" class="screen active">
         <div class="card card-accent">
             <div class="card-title"><i class="fa-solid fa-right-to-bracket"></i> 학습자 로그인</div>
-            <p style="font-size:13px; color:var(--text3); margin-bottom:14px;">학번과 비밀번호(숫자 6자리)를 입력하세요.</p>
+            <p style="font-size:13px;color:var(--text3);margin-bottom:14px;">학번과 비밀번호(숫자 6자리)를 입력하세요.</p>
             <div class="form-group">
                 <label class="form-label"><i class="fa-solid fa-id-badge"></i> 학번 (숫자 4자리)</label>
-                <input type="text" id="login-id" class="form-control" placeholder="예: 3700" maxlength="4" inputmode="numeric" pattern="[0-9]*">
+                <input type="text" id="login-id" class="form-control" placeholder="예: 3700" maxlength="4" inputmode="numeric">
             </div>
             <div class="form-group">
                 <label class="form-label"><i class="fa-solid fa-lock"></i> 비밀번호 (숫자 6자리)</label>
-                <input type="password" id="login-pwd" class="form-control" placeholder="숫자 6자리" maxlength="6" inputmode="numeric" pattern="[0-9]*">
+                <input type="password" id="login-pwd" class="form-control" placeholder="숫자 6자리" maxlength="6" inputmode="numeric">
             </div>
             <button class="btn btn-primary" onclick="handleLogin()"><i class="fa-solid fa-play"></i> 로그인</button>
             <button class="btn btn-outline" onclick="showScreen('screen-signup')" style="margin-top:10px;"><i class="fa-solid fa-user-plus"></i> 처음이신가요? 회원가입</button>
         </div>
     </div>
 
-    <!-- ===== 회원가입 ===== -->
+    <!-- 회원가입 -->
     <div id="screen-signup" class="screen">
         <div class="card card-purple">
             <div class="card-title" style="color:var(--accent2);"><i class="fa-solid fa-address-card"></i> 신규 회원가입</div>
-            <p style="font-size:13px; color:var(--text3); margin-bottom:14px;">나만의 학습 기록을 저장합니다. 예시) 홍길동 / 3700 / 숫자 6자리</p>
+            <p style="font-size:13px;color:var(--text3);margin-bottom:14px;">예시) 홍길동 / 3700 / 숫자 6자리</p>
             <div class="form-group">
                 <label class="form-label"><i class="fa-solid fa-user"></i> 이름</label>
                 <input type="text" id="join-name" class="form-control" placeholder="예: 홍길동" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
             </div>
             <div class="form-group">
                 <label class="form-label"><i class="fa-solid fa-id-badge"></i> 학번 (숫자 4자리)</label>
-                <input type="text" id="join-id" class="form-control" placeholder="예: 3700" maxlength="4" inputmode="numeric" pattern="[0-9]*">
+                <input type="text" id="join-id" class="form-control" placeholder="예: 3700" maxlength="4" inputmode="numeric">
             </div>
             <div class="form-group">
                 <label class="form-label"><i class="fa-solid fa-key"></i> 비밀번호 (숫자 6자리)</label>
-                <input type="password" id="join-pwd" class="form-control" placeholder="숫자 6자리" maxlength="6" inputmode="numeric" pattern="[0-9]*">
+                <input type="password" id="join-pwd" class="form-control" placeholder="숫자 6자리" maxlength="6" inputmode="numeric">
             </div>
             <button class="btn btn-purple" onclick="handleSignup()"><i class="fa-solid fa-check"></i> 가입 완료</button>
             <button class="btn btn-secondary" onclick="showScreen('screen-login')" style="margin-top:8px;"><i class="fa-solid fa-arrow-left"></i> 뒤로</button>
         </div>
     </div>
 
-    <!-- ===== 대시보드 ===== -->
+    <!-- 대시보드 -->
     <div id="screen-dashboard" class="screen">
         <div class="card card-accent">
-            <p style="font-size:14px; color:var(--text3);">반갑습니다!</p>
-            <h2 style="font-size:20px; font-weight:900; color:#fff; margin-top:2px;"><span id="dash-name" style="color:var(--accent);"></span> 학생</h2>
-            <p style="font-size:13px; color:var(--text3); margin-top:4px;">학번: <span id="dash-info"></span></p>
+            <p style="font-size:14px;color:var(--text3);">반갑습니다!</p>
+            <h2 style="font-size:20px;font-weight:900;color:#fff;margin-top:2px;"><span id="dash-name" style="color:var(--accent);"></span> 학생</h2>
+            <p style="font-size:13px;color:var(--text3);margin-top:4px;">학번: <span id="dash-info"></span></p>
             <div class="stat-grid">
                 <div class="stat-box"><span class="stat-label">풀이 문제</span><span class="stat-value" id="dash-total">0</span></div>
                 <div class="stat-box"><span class="stat-label">정답률</span><span class="stat-value" id="dash-acc">0%</span></div>
@@ -573,7 +231,7 @@
                 <div class="progress-bar"><div class="progress-fill" id="dash-progress-bar" style="width:0%"></div></div>
             </div>
         </div>
-        <button class="btn btn-primary" onclick="startStudyMode()" style="padding:17px; font-size:17px;">
+        <button class="btn btn-primary" onclick="startStudyMode()" style="padding:17px;font-size:17px;">
             <i class="fa-solid fa-rocket"></i> 33품목 실기 학습장 입장
         </button>
         <button class="btn btn-secondary" onclick="logout()" style="margin-top:8px;">
@@ -581,15 +239,13 @@
         </button>
     </div>
 
-    <!-- ===== 학습 화면 ===== -->
+    <!-- 학습 화면 -->
     <div id="screen-study" class="screen">
         <div class="top-bar">
             <span class="top-bar-user"><i class="fa-solid fa-user-graduate"></i> <span id="study-current-user"></span></span>
             <button class="btn btn-secondary btn-small" onclick="goDashboard()"><i class="fa-solid fa-floppy-disk"></i> 저장/나가기</button>
         </div>
-
         <select class="form-control" id="dish-selector" onchange="changeDish()" style="margin-bottom:14px;"></select>
-
         <div class="tabs">
             <button class="tab-btn active" id="tab-study" onclick="switchTab('study')"><i class="fa-solid fa-book-open"></i> 1. 이론 학습</button>
             <button class="tab-btn" id="tab-quiz" onclick="switchTab('quiz')"><i class="fa-solid fa-pen-to-square"></i> 2. 문제풀이</button>
@@ -599,11 +255,11 @@
         <div id="study" class="content-section active">
             <div class="card card-accent">
                 <div class="card-title"><i class="fa-regular fa-clock"></i> 시험 시간</div>
-                <p style="font-size:22px; font-weight:900; color:var(--orange);" id="study-time"></p>
+                <p style="font-size:22px;font-weight:900;color:var(--orange);" id="study-time"></p>
             </div>
-            <div class="card card-accent" style="margin-bottom:14px;">
+            <div class="card card-accent">
                 <div class="card-title"><i class="fa-solid fa-ruler-combined"></i> 완성 규격</div>
-                <p style="font-size:17px; font-weight:700; color:var(--yellow);" id="study-spec"></p>
+                <p style="font-size:17px;font-weight:700;color:var(--yellow);" id="study-spec"></p>
             </div>
             <div class="card card-accent">
                 <div class="card-title"><i class="fa-solid fa-clipboard-check"></i> 요구사항</div>
@@ -624,36 +280,33 @@
 
         <!-- 퀴즈 탭 -->
         <div id="quiz" class="content-section">
-            <div class="card card-accent" style="margin-bottom:14px; padding:14px 18px;">
-                <div style="display:flex; justify-content:space-between; align-items:center;">
-                    <span style="font-size:14px; font-weight:700; color:var(--text2);">문제 풀이 진행</span>
-                    <span id="quiz-progress-text" style="font-size:14px; font-weight:900; color:var(--accent);">0 / 15</span>
+            <div class="quiz-header">
+                <div class="quiz-header-row">
+                    <span style="font-size:13px;font-weight:700;color:var(--text2);">60문제 풀 · 완전 랜덤 10문제</span>
+                    <span id="quiz-progress-text" style="font-size:15px;font-weight:900;color:var(--accent);">0 / 10</span>
                 </div>
                 <div class="progress-bar" style="margin-top:8px;">
                     <div class="progress-fill" id="quiz-progress-bar" style="width:0%;"></div>
                 </div>
-                <div style="display:flex; justify-content:space-between; margin-top:8px;">
-                    <span style="font-size:12px; color:var(--green);">✅ 정답 <span id="quiz-correct-count">0</span></span>
-                    <span style="font-size:12px; color:var(--red);">❌ 오답 <span id="quiz-wrong-count">0</span></span>
+                <div class="quiz-score-row">
+                    <span style="font-size:12px;color:var(--green);">✅ 정답 <span id="quiz-correct-count">0</span></span>
+                    <span style="font-size:12px;color:var(--text3);">
+                        <span style="color:var(--accent);">▣</span> 객관식&nbsp;
+                        <span style="color:var(--green);">⊙</span> OX&nbsp;
+                        <span style="color:var(--orange);">▫</span> 빈칸&nbsp;
+                        <span style="color:var(--accent2);">⬡</span> 순서
+                    </span>
+                    <span style="font-size:12px;color:var(--red);">❌ 오답 <span id="quiz-wrong-count">0</span></span>
                 </div>
             </div>
             <div id="quiz-questions-wrap"></div>
-            <div class="quiz-box" id="quiz-seq-box">
-                <div class="quiz-title"><i class="fa-solid fa-arrow-down-1-9"></i> 조리 순서 맞추기</div>
-                <p class="quiz-hint">섞여있는 과정을 올바른 순서대로 터치하세요.</p>
-                <div id="options-container"></div>
-                <ul class="answer-list" id="answer-list"></ul>
-                <div id="seq-result" class="quiz-result"></div>
-                <button class="retry-study-btn" id="seq-retry-btn" onclick="showReview('seq')">
-                    <i class="fa-solid fa-rotate-left"></i> 순서 틀렸습니다 → 이론 다시 보기
-                </button>
-            </div>
-            <div class="card" id="quiz-final-result" style="display:none; text-align:center; margin-top:10px;">
-                <div style="font-size:32px; margin-bottom:8px;" id="quiz-final-emoji">🎉</div>
-                <div style="font-size:20px; font-weight:900; color:#fff;" id="quiz-final-score"></div>
-                <div style="font-size:14px; color:var(--text2); margin-top:6px;" id="quiz-final-msg"></div>
-                <button class="btn btn-primary" onclick="renderQuizTab()" style="margin-top:14px;">
-                    <i class="fa-solid fa-rotate"></i> 다시 풀기 (문제 새로 섞기)
+            <div class="card final-result-card" id="quiz-final-result">
+                <div class="final-emoji" id="quiz-final-emoji">🎉</div>
+                <div class="final-score" id="quiz-final-score"></div>
+                <div class="final-msg" id="quiz-final-msg"></div>
+                <div class="type-summary" id="quiz-type-summary"></div>
+                <button class="btn btn-primary" onclick="renderQuizTab()" style="margin-top:16px;">
+                    <i class="fa-solid fa-rotate"></i> 새 문제 10개 다시 풀기
                 </button>
                 <button class="btn btn-outline" onclick="switchTab('study')" style="margin-top:8px;">
                     <i class="fa-solid fa-book-open"></i> 이론 다시 보기
@@ -662,7 +315,7 @@
         </div>
     </div>
 
-    <!-- ===== 관리자 화면 ===== -->
+    <!-- 관리자 화면 -->
     <div id="screen-admin" class="screen">
         <div class="card card-accent" style="margin-bottom:14px;">
             <div class="card-title"><i class="fa-solid fa-chalkboard-user"></i> 선생님 대시보드</div>
@@ -671,23 +324,19 @@
                 <div class="stat-box"><span class="stat-label">전체 풀이 수</span><span class="stat-value" id="admin-total-q">0</span></div>
             </div>
         </div>
-
-        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px;">
-            <input type="text" id="admin-search" class="form-control" style="flex:1; min-width:160px;" placeholder="이름 또는 학번 검색..." oninput="renderAdminTable()">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px;">
+            <input type="text" id="admin-search" class="form-control" style="flex:1;min-width:160px;" placeholder="이름 또는 학번 검색..." oninput="renderAdminTable()">
         </div>
-        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;">
             <button class="btn btn-outline btn-small" onclick="changeAdminPassword()"><i class="fa-solid fa-key"></i> 비번 변경</button>
-            <button class="btn btn-small" style="background:var(--accent2); color:#fff;" onclick="exportCSV()"><i class="fa-solid fa-file-csv"></i> 엑셀 저장</button>
+            <button class="btn btn-small" style="background:var(--accent2);color:#fff;" onclick="exportCSV()"><i class="fa-solid fa-file-csv"></i> 엑셀 저장</button>
             <button class="btn btn-secondary btn-small" onclick="logout()"><i class="fa-solid fa-xmark"></i> 닫기</button>
         </div>
-
         <div class="table-wrap">
             <table>
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>이름</th>
-                        <th>학번</th>
+                        <th>#</th><th>이름</th><th>학번</th>
                         <th onclick="sortStudents('totalQuestions')">풀이수 ↕</th>
                         <th onclick="sortStudents('correctCount')">정답 ↕</th>
                         <th onclick="sortStudents('accuracy')">정답률 ↕</th>
@@ -701,10 +350,10 @@
         <button class="btn btn-danger" style="margin-top:20px;" onclick="resetAllData()"><i class="fa-solid fa-trash-can"></i> 전체 데이터 초기화</button>
     </div>
 
-    <div class="secret-admin" onclick="showAdminLogin()">App v6.0 · 관리자</div>
+    <div class="secret-admin" onclick="showAdminLogin()">App v7.0 · 관리자</div>
 </div>
 
-<!-- ===== 관리자 로그인 모달 ===== -->
+<!-- 모달: 관리자 로그인 -->
 <div class="modal-overlay" id="modal-admin">
     <div class="modal">
         <h3><i class="fa-solid fa-shield-halved"></i> 관리자 로그인</h3>
@@ -717,21 +366,21 @@
     </div>
 </div>
 
-<!-- ===== 관리자 비밀번호 변경 모달 ===== -->
+<!-- 모달: 비밀번호 변경 -->
 <div class="modal-overlay" id="modal-change-pwd">
     <div class="modal">
         <h3><i class="fa-solid fa-key"></i> 관리자 비밀번호 변경</h3>
         <div class="form-group">
             <label class="form-label">현재 비밀번호</label>
-            <input type="password" id="admin-cur-pwd" class="form-control" placeholder="현재 비밀번호" maxlength="20">
+            <input type="password" id="admin-cur-pwd" class="form-control" maxlength="20">
         </div>
         <div class="form-group">
             <label class="form-label">새 비밀번호</label>
-            <input type="password" id="admin-new-pwd" class="form-control" placeholder="새 비밀번호 (4자 이상)" maxlength="20">
+            <input type="password" id="admin-new-pwd" class="form-control" maxlength="20">
         </div>
         <div class="form-group">
             <label class="form-label">새 비밀번호 확인</label>
-            <input type="password" id="admin-new-pwd2" class="form-control" placeholder="새 비밀번호 재입력" maxlength="20">
+            <input type="password" id="admin-new-pwd2" class="form-control" maxlength="20">
         </div>
         <button class="btn btn-primary" onclick="doChangeAdminPassword()" style="margin-top:8px;">변경 완료</button>
         <button class="btn btn-secondary" onclick="closeModal('modal-change-pwd')" style="margin-top:8px;">취소</button>
@@ -739,20 +388,19 @@
 </div>
 
 <script>
-/* ─────────────────────────────────────────────
+/* ════════════════════════════════════════
    DB / 스토리지
-───────────────────────────────────────────── */
-const DB_KEY       = "hansik_db_v6";
-const ADMIN_KEY    = "hansik_admin_pwd_v6";
+════════════════════════════════════════ */
+const DB_KEY    = "hansik_db_v7";
+const ADMIN_KEY = "hansik_admin_pwd_v7";
+function getAdminPwd() { return localStorage.getItem(ADMIN_KEY) || "0000"; }
+function setAdminPwd(v) { localStorage.setItem(ADMIN_KEY, v); }
+function getDB() { try { return JSON.parse(localStorage.getItem(DB_KEY) || "[]"); } catch(e){ return []; } }
+function saveDB(d) { try { localStorage.setItem(DB_KEY, JSON.stringify(d)); } catch(e){ console.warn("스토리지 오류"); } }
 
-function getAdminPwd()          { return localStorage.getItem(ADMIN_KEY) || "0000"; }
-function setAdminPwd(v)         { localStorage.setItem(ADMIN_KEY, v); }
-function getDB()                { try { return JSON.parse(localStorage.getItem(DB_KEY) || "[]"); } catch(e){ return []; } }
-function saveDB(d)              { try { localStorage.setItem(DB_KEY, JSON.stringify(d)); } catch(e){ console.warn("스토리지 오류"); } }
-
-/* ─────────────────────────────────────────────
-   33품목 데이터 (원문 전체)
-───────────────────────────────────────────── */
+/* ════════════════════════════════════════
+   33품목 원본 데이터
+════════════════════════════════════════ */
 const rawData = [
     {
         n:"겨자채", t:"35분", s:"0.3×1×4cm",
@@ -954,39 +602,45 @@ const rawData = [
     }
 ];
 
-/* ─────────────────────────────────────────────
-   상태 변수
-───────────────────────────────────────────── */
+/* ════════════════════════════════════════
+   상태
+════════════════════════════════════════ */
 let currentUser = null;
 let currentDish = null;
-let expectedStep = 0;
-let currentSequence = [];
 let sortState = { key: 'totalQuestions', asc: false };
+// 퀴즈 세션 상태
+let quizSession = { total:0, correct:0, wrong:0, byType:{} };
 
-/* ─────────────────────────────────────────────
+/* ════════════════════════════════════════
+   유틸 - 형광펜
+════════════════════════════════════════ */
+function hl(text) {
+    if (!text) return '';
+    return text.replace(/(\d+(\.\d+)?\s*(cm|g|mL|분|큰술|작은술|컵|℃|시간|개|쪽|토막|마리|포기|뿌리|인분))|(\d+:\d+)/g,
+        m => `<span class="hl">${m}</span>`);
+}
+
+/* ════════════════════════════════════════
    화면 전환
-───────────────────────────────────────────── */
+════════════════════════════════════════ */
 function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     const el = document.getElementById(id);
     if (el) el.classList.add('active');
 }
 
-/* ─────────────────────────────────────────────
-   로그인 / 회원가입 / 로그아웃
-───────────────────────────────────────────── */
+/* ════════════════════════════════════════
+   인증
+════════════════════════════════════════ */
 function handleLogin() {
-    const id  = document.getElementById('login-id').value.trim();
+    const id = document.getElementById('login-id').value.trim();
     const pwd = document.getElementById('login-pwd').value.trim();
-
     if (!id || !pwd) { alert('학번과 비밀번호를 입력하세요.'); return; }
-    if (!/^\d{4}$/.test(id))  { alert('학번은 숫자 4자리입니다.'); return; }
+    if (!/^\d{4}$/.test(id)) { alert('학번은 숫자 4자리입니다.'); return; }
     if (!/^\d{6}$/.test(pwd)) { alert('비밀번호는 숫자 6자리입니다.'); return; }
-
     const db = getDB();
     const user = db.find(u => u.id === id && u.pwd === pwd);
     if (!user) { alert('학번 또는 비밀번호가 맞지 않습니다.\n처음이시라면 회원가입을 해주세요.'); return; }
-
     currentUser = user;
     renderDashboard();
     showScreen('screen-dashboard');
@@ -995,98 +649,70 @@ function handleLogin() {
 }
 
 function handleSignup() {
-    /* 한글 조합(IME) 완료 보장을 위해 blur 처리 후 값 읽기 */
     document.getElementById('join-name').blur();
     document.getElementById('join-id').blur();
     document.getElementById('join-pwd').blur();
-
     setTimeout(function() {
         const name = document.getElementById('join-name').value.trim();
-        const id   = document.getElementById('join-id').value.trim();
-        const pwd  = document.getElementById('join-pwd').value.trim();
-
+        const id = document.getElementById('join-id').value.trim();
+        const pwd = document.getElementById('join-pwd').value.trim();
         if (!name) { alert('이름을 입력하세요.'); return; }
         if (name.length < 2) { alert('이름은 2자 이상 입력하세요.'); return; }
-        if (!/^\d{4}$/.test(id))  { alert('학번은 숫자 4자리입니다.'); return; }
+        if (!/^\d{4}$/.test(id)) { alert('학번은 숫자 4자리입니다.'); return; }
         if (!/^\d{6}$/.test(pwd)) { alert('비밀번호는 숫자 6자리입니다.'); return; }
-
         const db = getDB();
         if (db.find(u => u.id === id)) { alert('이미 가입된 학번입니다.'); return; }
-
-        const newUser = {
-            name, id, pwd,
-            totalQuestions: 0,
-            correctCount: 0,
-            wrongCount: 0,
-            studiedDishes: [],
-            lastStudyAt: null,
-            history: []
-        };
-        db.push(newUser);
-        saveDB(db);
+        const newUser = { name, id, pwd, totalQuestions:0, correctCount:0, wrongCount:0, studiedDishes:[], lastStudyAt:null, history:[] };
+        db.push(newUser); saveDB(db);
         alert(name + ' 학생, 가입을 환영합니다!\n이제 로그인하세요.');
         showScreen('screen-login');
-        document.getElementById('join-name').value = '';
-        document.getElementById('join-id').value = '';
-        document.getElementById('join-pwd').value = '';
+        ['join-name','join-id','join-pwd'].forEach(k => document.getElementById(k).value = '');
     }, 100);
 }
 
-function logout() {
-    currentUser = null;
-    showScreen('screen-login');
-}
+function logout() { currentUser = null; showScreen('screen-login'); }
 
-/* ─────────────────────────────────────────────
+/* ════════════════════════════════════════
    대시보드
-───────────────────────────────────────────── */
+════════════════════════════════════════ */
 function renderDashboard() {
     if (!currentUser) return;
     document.getElementById('dash-name').innerText = currentUser.name;
     document.getElementById('dash-info').innerText = currentUser.id;
-    document.getElementById('dash-total').innerText   = currentUser.totalQuestions || 0;
+    document.getElementById('dash-total').innerText = currentUser.totalQuestions || 0;
     document.getElementById('dash-correct').innerText = currentUser.correctCount || 0;
-    document.getElementById('dash-wrong').innerText   = currentUser.wrongCount || 0;
-    const acc = currentUser.totalQuestions > 0
-        ? Math.round((currentUser.correctCount / currentUser.totalQuestions) * 100) : 0;
+    document.getElementById('dash-wrong').innerText = currentUser.wrongCount || 0;
+    const acc = currentUser.totalQuestions > 0 ? Math.round((currentUser.correctCount / currentUser.totalQuestions) * 100) : 0;
     document.getElementById('dash-acc').innerText = acc + '%';
     const studied = (currentUser.studiedDishes || []).length;
     document.getElementById('dash-progress-label').innerText = `${studied} / 33품목`;
     document.getElementById('dash-progress-bar').style.width = Math.round((studied / 33) * 100) + '%';
 }
 
-/* ─────────────────────────────────────────────
+/* ════════════════════════════════════════
    기록 저장
-───────────────────────────────────────────── */
+════════════════════════════════════════ */
 function recordAnswer(isCorrect, type) {
     if (!currentUser) return;
     currentUser.totalQuestions = (currentUser.totalQuestions || 0) + 1;
     if (isCorrect) currentUser.correctCount = (currentUser.correctCount || 0) + 1;
-    else           currentUser.wrongCount   = (currentUser.wrongCount   || 0) + 1;
+    else currentUser.wrongCount = (currentUser.wrongCount || 0) + 1;
     currentUser.lastStudyAt = new Date().toISOString();
-
     if (currentDish) {
-        const dishName = currentDish.n;
         if (!currentUser.studiedDishes) currentUser.studiedDishes = [];
-        if (!currentUser.studiedDishes.includes(dishName)) {
-            currentUser.studiedDishes.push(dishName);
-        }
+        if (!currentUser.studiedDishes.includes(currentDish.n)) currentUser.studiedDishes.push(currentDish.n);
         if (!currentUser.history) currentUser.history = [];
-        currentUser.history.push({
-            dish: dishName, type, correct: isCorrect,
-            at: new Date().toISOString()
-        });
-        if (currentUser.history.length > 200) currentUser.history = currentUser.history.slice(-200);
+        currentUser.history.push({ dish: currentDish.n, type, correct: isCorrect, at: new Date().toISOString() });
+        if (currentUser.history.length > 300) currentUser.history = currentUser.history.slice(-300);
     }
-
     const db = getDB();
     const idx = db.findIndex(u => u.id === currentUser.id);
     if (idx >= 0) { db[idx] = currentUser; saveDB(db); }
 }
 
-/* ─────────────────────────────────────────────
+/* ════════════════════════════════════════
    학습 모드
-───────────────────────────────────────────── */
+════════════════════════════════════════ */
 function startStudyMode() {
     document.getElementById('study-current-user').innerText = currentUser.name;
     initDishSelector();
@@ -1094,31 +720,15 @@ function startStudyMode() {
     showScreen('screen-study');
 }
 
-function goDashboard() {
-    renderDashboard();
-    showScreen('screen-dashboard');
-}
+function goDashboard() { renderDashboard(); showScreen('screen-dashboard'); }
 
 function switchTab(tab) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
     document.getElementById(tab).classList.add('active');
-    const idx = tab === 'study' ? 0 : 1;
-    document.querySelectorAll('.tab-btn')[idx].classList.add('active');
+    document.querySelectorAll('.tab-btn')[tab === 'study' ? 0 : 1].classList.add('active');
 }
 
-/* ─────────────────────────────────────────────
-   형광펜
-───────────────────────────────────────────── */
-function hl(text) {
-    if (!text) return '';
-    return text.replace(/(\d+(\.\d+)?\s*(cm|g|mL|mL|분|큰술|작은술|컵|℃|시간|개|쪽|토막|마리|포기|뿌리|인분))|(\d+:\d+)/g,
-        m => `<span class="hl">${m}</span>`);
-}
-
-/* ─────────────────────────────────────────────
-   품목 초기화 & 렌더
-───────────────────────────────────────────── */
 function initDishSelector() {
     const sel = document.getElementById('dish-selector');
     sel.innerHTML = '';
@@ -1142,565 +752,699 @@ function changeDish() {
 function renderStudyTab() {
     document.getElementById('study-time').innerText = currentDish.t || '';
     document.getElementById('study-spec').innerHTML = hl(currentDish.s || '–');
-    document.getElementById('study-reqs').innerHTML  = (currentDish.r || []).map(x => `<li>${hl(x)}</li>`).join('');
+    document.getElementById('study-reqs').innerHTML = (currentDish.r || []).map(x => `<li>${hl(x)}</li>`).join('');
     document.getElementById('study-check').innerHTML = (currentDish.c || []).map(x => `<li>${hl(x)}</li>`).join('');
-    document.getElementById('study-seq').innerHTML   = (currentDish.q || []).map(x => `<li>${hl(x)}</li>`).join('');
+    document.getElementById('study-seq').innerHTML = (currentDish.q || []).map(x => `<li>${hl(x)}</li>`).join('');
 }
 
-/* ═══════════════════════════════════════════════════
-   ★ 핵심: 같은 품목 내용을 변형해서 오답 보기 생성
-   ─ 숫자 치환, 단어 치환, 문장 부분 교체 방식으로
-     진짜 헷갈리는 보기를 만들어냅니다.
-═══════════════════════════════════════════════════ */
+/* ════════════════════════════════════════
+   ★ 60문제 풀 생성 엔진
+════════════════════════════════════════ */
 
-/* 숫자가 들어간 텍스트에서 숫자를 살짝 바꿔치기 */
-function mutateNumbers(text) {
-    const swaps = {
-        '0.2': ['0.3', '0.5', '1'],
-        '0.3': ['0.2', '0.5', '1'],
-        '0.4': ['0.3', '0.5', '0.6'],
-        '0.5': ['0.3', '0.8', '1'],
-        '0.6': ['0.5', '0.8', '1'],
-        '0.7': ['0.5', '1', '0.6'],
-        '0.8': ['0.5', '1', '0.6'],
-        '1': ['1.5', '2', '0.5'],
-        '1.5': ['1', '2', '3'],
-        '2': ['1', '3', '1.5'],
-        '3': ['2', '4', '5'],
-        '4': ['3', '5', '6'],
-        '5': ['4', '6', '3'],
-        '6': ['5', '7', '4'],
-        '7': ['6', '8', '5'],
-        '8': ['6', '10', '7'],
-        '9': ['6', '12', '8'],
-        '10': ['8', '12', '6'],
-        '15': ['10', '20', '12'],
-        '20': ['15', '25', '30'],
-        '25': ['20', '30', '15'],
-        '30': ['25', '35', '20'],
-        '35': ['30', '40', '25'],
-        '40': ['35', '45', '30'],
-        '50': ['40', '45', '60'],
-    };
-    /* 텍스트에서 숫자 찾아 무작위로 하나 치환 */
-    const numPattern = /\d+(\.\d+)?/g;
-    const matches = [...text.matchAll(numPattern)];
-    if (matches.length === 0) return null;
-    /* 무작위로 하나 선택 */
-    const target = matches[Math.floor(Math.random() * matches.length)];
-    const val = target[0];
-    const alts = swaps[val];
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+
+/* ── 숫자 변형 ── */
+const numSwaps = {
+    '0.2':['0.3','0.5','1'], '0.3':['0.2','0.5','1'],
+    '0.4':['0.3','0.5','0.6'], '0.5':['0.3','0.8','1'],
+    '0.6':['0.5','0.8','1'], '0.7':['0.5','1','0.6'],
+    '0.8':['0.5','1','0.6'], '1':['1.5','2','0.5'],
+    '1.5':['1','2','3'], '2':['1','3','1.5'],
+    '3':['2','4','5'], '4':['3','5','6'],
+    '5':['4','6','3'], '6':['5','7','4'],
+    '7':['6','8','5'], '8':['6','10','7'],
+    '10':['8','12','6'], '15':['10','20','12'],
+    '20':['15','25','30'], '25':['20','30','15'],
+    '30':['25','35','20'], '35':['30','40','25'],
+    '40':['35','45','30'], '50':['40','45','60'],
+};
+
+function mutateNum(text) {
+    const matches = [...text.matchAll(/\d+(\.\d+)?/g)];
+    if (!matches.length) return null;
+    const t = matches[Math.floor(Math.random() * matches.length)];
+    const alts = numSwaps[t[0]];
     if (!alts) return null;
-    const replacement = alts[Math.floor(Math.random() * alts.length)];
-    /* 처음 등장하는 해당 숫자만 치환 */
-    return text.replace(new RegExp('(?<![\\d.])' + val.replace('.', '\\.') + '(?![\\d])'), replacement);
+    return text.replace(new RegExp('(?<![\\d.])' + t[0].replace('.', '\\.') + '(?![\\d])'), alts[Math.floor(Math.random() * alts.length)]);
 }
 
-/* 양념/재료 단어를 다른 것으로 치환 */
-function mutateWords(text) {
-    const wordSwaps = [
-        [['간장', '소금', '새우젓', '국간장'], ['간장', '소금', '새우젓', '국간장']],
-        [['설탕', '꿀', '물엿'], ['설탕', '꿀', '물엿']],
-        [['참기름', '들기름', '식용유'], ['참기름', '들기름', '식용유']],
-        [['고춧가루', '고추장', '된장'], ['고춧가루', '고추장', '된장']],
-        [['후춧가루', '깨소금', '생강'], ['후춧가루', '깨소금', '생강']],
-        [['끓는 물', '찬물', '소금물', '설탕물'], ['끓는 물', '찬물', '소금물', '설탕물']],
-        [['약한 불', '센 불', '중불'], ['약한 불', '센 불', '중불']],
-        [['면포', '랩', '한지'], ['면포', '랩', '한지']],
-        [['석쇠', '팬', '냄비', '프라이팬'], ['석쇠', '팬', '냄비', '프라이팬']],
-        [['노릇노릇', '투명하게', '바삭하게'], ['노릇노릇', '투명하게', '바삭하게']],
-    ];
-    for (const [group] of wordSwaps) {
-        for (const word of group) {
-            if (text.includes(word)) {
-                const others = group.filter(w => w !== word);
-                if (others.length === 0) continue;
-                const rep = others[Math.floor(Math.random() * others.length)];
-                return text.replace(word, rep);
+const wordSwapGroups = [
+    ['간장','소금','새우젓','국간장'],
+    ['설탕','꿀','물엿'],
+    ['참기름','들기름','식용유'],
+    ['고춧가루','고추장','된장'],
+    ['후춧가루','깨소금'],
+    ['끓는 물','찬물','소금물'],
+    ['약한 불','센 불','중불'],
+    ['면포','랩'],
+    ['석쇠','팬','냄비'],
+];
+function mutateWord(text) {
+    for (const g of shuffle(wordSwapGroups)) {
+        for (const w of g) {
+            if (text.includes(w)) {
+                const others = g.filter(x => x !== w);
+                if (!others.length) continue;
+                return text.replace(w, others[Math.floor(Math.random() * others.length)]);
             }
         }
     }
     return null;
 }
 
-/* 동사 끝 변형 */
+const suffixPairs = [
+    ['넣는다','빼낸다'],['볶는다','데친다'],['절인다','헹군다'],
+    ['약한 불','센 불'],['안쪽','바깥쪽'],['앞뒤','한쪽면만'],
+    ['제거한다','유지한다'],['짜낸다','붓는다'],
+];
 function mutateSuffix(text) {
-    const pairs = [
-        ['넣는다', '빼낸다'], ['빼낸다', '넣는다'],
-        ['볶는다', '데친다'], ['데친다', '볶는다'],
-        ['절인다', '헹군다'], ['헹군다', '절인다'],
-        ['넣고', '빼고'], ['빼고', '넣고'],
-        ['짜낸다', '붓는다'], ['붓는다', '짜낸다'],
-        ['제거한다', '유지한다'], ['유지한다', '제거한다'],
-        ['약한 불', '센 불'], ['센 불', '약한 불'],
-        ['앞뒤', '한쪽면만'], ['안쪽', '바깥쪽'], ['바깥쪽', '안쪽'],
-    ];
-    for (const [from, to] of pairs) {
-        if (text.includes(from)) return text.replace(from, to);
+    for (const [a,b] of shuffle(suffixPairs)) {
+        if (text.includes(a)) return text.replace(a, b);
+        if (text.includes(b)) return text.replace(b, a);
     }
     return null;
 }
 
-/* ─── 오답 3개 생성 (같은 품목 내용 변형) ─── */
-function makeWrongOptions(correct, dish, type) {
+/* ─── 같은 품목 내에서만 오답 3개 생성 ───
+   전략 A: 정답 문장 자체를 숫자/단어/동사 변형 (가장 헷갈림)
+   전략 B: 같은 품목 다른 문장의 숫자·재료를 정답에 이식
+   전략 C: 부족 시 같은 품목 다른 단계 문장 직접 사용
+   ※ 다른 품목 내용은 절대 사용 안 함
+*/
+function makeWrongs(correct, dish) {
     const pool = new Set();
+    const allSrc = [...(dish.q||[]), ...(dish.r||[]), ...(dish.c||[])].filter(Boolean);
+    const otherSrc = allSrc.filter(s => s !== correct);
 
-    /* 전략 1: 같은 품목의 다른 문장에서 숫자/단어 변형 */
-    const allSentences = [
-        ...(dish.q || []),
-        ...(dish.r || []),
-        ...(dish.c || []),
-        dish.t, dish.s
-    ].filter(Boolean);
-
-    for (const sent of allSentences.sort(() => Math.random() - 0.5)) {
-        if (pool.size >= 6) break;
-        const v1 = mutateNumbers(sent);
-        if (v1 && v1 !== correct && v1 !== sent) pool.add(v1);
-        const v2 = mutateWords(sent);
-        if (v2 && v2 !== correct && v2 !== sent) pool.add(v2);
-        const v3 = mutateSuffix(sent);
-        if (v3 && v3 !== correct && v3 !== sent) pool.add(v3);
+    /* 전략 A: 정답 문장 직접 변형 */
+    for (let i = 0; i < 8; i++) {
+        [mutateNum, mutateWord, mutateSuffix].forEach(fn => {
+            const v = fn(correct);
+            if (v && v !== correct) pool.add(v);
+        });
     }
 
-    /* 전략 2: 정답 문장 자체를 변형 (가장 헷갈리는 오답) */
-    for (let i = 0; i < 5; i++) {
-        const v1 = mutateNumbers(correct);
-        if (v1 && v1 !== correct) pool.add(v1);
-        const v2 = mutateWords(correct);
-        if (v2 && v2 !== correct) pool.add(v2);
-        const v3 = mutateSuffix(correct);
-        if (v3 && v3 !== correct) pool.add(v3);
-    }
-
-    /* 전략 3: 시험시간 문제는 같은 시간대 품목들로 보완 */
-    if (type === '시험시간') {
-        const times = [...new Set(rawData.map(d => d.t))].filter(t => t !== correct);
-        times.sort(() => Math.random() - 0.5).slice(0, 3).forEach(t => pool.add(t));
-    }
-
-    /* 전략 4: 규격 문제는 숫자만 바꾼 변형 규격 */
-    if (type === '규격') {
-        const fakeSpecs = [correct];
-        for (let i = 0; i < 5; i++) {
-            const v = mutateNumbers(correct);
-            if (v && v !== correct) fakeSpecs.push(v);
-        }
-        fakeSpecs.slice(1).forEach(s => pool.add(s));
-    }
-
-    const arr = [...pool].filter(x => x !== correct).sort(() => Math.random() - 0.5);
-    return arr.slice(0, 3);
-}
-
-/* 양념 포함 단계 추출 */
-function extractSeasoningSteps(dish) {
-    const units = /큰술|작은술|컵|비율|간장|설탕|식초|참기름|고춧가루|소금|후춧가루|깨소금|고추장|생강|마늘|배즙|유장/;
-    return (dish.q || []).filter(s => units.test(s));
-}
-
-function renderQuizTab() {
-    /* ═══ 15문제 풀세트 생성 ═══
-       유형별 문제 수:
-       - 시험시간   1문제
-       - 규격       2문제 (숫자 변형으로 다른 보기)
-       - 요구사항   3문제 (항목별 1문제씩)
-       - 유의사항   3문제 (항목별 1문제씩)
-       - 양념비율   3문제 (조리순서 양념문장별)
-       - 조리순서   1문제 (순서맞추기)
-       = 합계 13 객관식 + 1 순서 = 14문제 → 부족분은 추가 변형으로 15문제 채움
-    ═══════════════════════════════════ */
-
-    /* 진행 상태 초기화 */
-    let quizTotal = 0, quizCorrect = 0, quizWrong = 0;
-
-    function updateProgress() {
-        const pct = quizTotal > 0 ? Math.round((quizTotal / 15) * 100) : 0;
-        const pt = document.getElementById('quiz-progress-text');
-        const pb = document.getElementById('quiz-progress-bar');
-        const cc = document.getElementById('quiz-correct-count');
-        const wc = document.getElementById('quiz-wrong-count');
-        if (pt) pt.textContent = quizTotal + ' / 15';
-        if (pb) pb.style.width = pct + '%';
-        if (cc) cc.textContent = quizCorrect;
-        if (wc) wc.textContent = quizWrong;
-
-        if (quizTotal >= 15) {
-            const fr = document.getElementById('quiz-final-result');
-            const fs = document.getElementById('quiz-final-score');
-            const fm = document.getElementById('quiz-final-msg');
-            const fe = document.getElementById('quiz-final-emoji');
-            if (fr) {
-                fr.style.display = 'block';
-                fr.scrollIntoView({ behavior: 'smooth' });
+    /* 전략 B: 같은 품목 다른 문장의 숫자를 정답 문장 숫자 자리에 이식 */
+    const ingList = ['간장','소금','참기름','고추장','고춧가루','설탕','식초','깨소금','새우젓','국간장','후춧가루','들기름','식용유','면포','석쇠','팬','냄비','찬물','끓는 물','소금물','약한 불','센 불','중불'];
+    for (const src of shuffle(otherSrc)) {
+        if (pool.size >= 10) break;
+        // 다른 문장의 숫자를 정답 숫자 자리에 심기
+        const srcNums = [...src.matchAll(/\d+(\.\d+)?/g)].map(m => m[0]);
+        const correctNums = [...correct.matchAll(/\d+(\.\d+)?/g)].map(m => m[0]);
+        if (srcNums.length && correctNums.length) {
+            const donor = srcNums[Math.floor(Math.random() * srcNums.length)];
+            const target = correctNums[Math.floor(Math.random() * correctNums.length)];
+            if (donor !== target) {
+                const v = correct.replace(new RegExp('(?<![\\d.])' + target.replace('.', '\\.') + '(?![\\d])'), donor);
+                if (v && v !== correct) pool.add(v);
             }
-            const pctC = Math.round((quizCorrect / 15) * 100);
-            if (fs) fs.textContent = '15문제 중 ' + quizCorrect + '문제 정답  (' + pctC + '%)';
-            if (fe) fe.textContent = pctC >= 80 ? '🏆' : pctC >= 60 ? '👍' : '📚';
-            if (fm) fm.textContent = pctC >= 80 ? '훌륭합니다! 이 품목은 완벽하게 숙지했습니다.' :
-                                     pctC >= 60 ? '좋아요! 틀린 문제를 이론에서 다시 확인하세요.' :
-                                                  '이론 탭에서 내용을 다시 학습해보세요.';
+        }
+        // 다른 문장의 재료를 정답 문장의 같은 재료 자리에 심기
+        for (const ing of shuffle(ingList)) {
+            if (src.includes(ing) && correct.includes(ing)) {
+                const otherIng = ingList.find(x => x !== ing && src.includes(x));
+                if (otherIng) { const v = correct.replace(ing, otherIng); if (v !== correct) { pool.add(v); break; } }
+            }
         }
     }
 
-    /* 문제 컨테이너 초기화 */
+    /* 전략 C: 부족하면 같은 품목 다른 단계 문장 그대로 사용 */
+    if (pool.size < 3) {
+        for (const src of shuffle(otherSrc)) {
+            if (src.length > 10) pool.add(src);
+            if (pool.size >= 6) break;
+        }
+    }
+
+    return shuffle([...pool].filter(x => x && x !== correct)).slice(0, 3);
+}
+
+/* ════════════════════════════════════════
+   60문제 풀 빌드
+════════════════════════════════════════ */
+function buildQuestionPool(dish) {
+    const pool = [];
+
+    /* ── 1. 객관식 4지선다 (MCQ) ── 약 20문제 */
+
+    // 시험 시간 (2문제)
+    pool.push({ type:'mcq', tag:'⏱ 시험시간', q:`<strong>${dish.n}</strong>의 시험 시간은?`, correct: dish.t,
+        wrongs: makeWrongs(dish.t, dish) });
+    pool.push({ type:'mcq', tag:'⏱ 시험시간', q:`<strong>${dish.n}</strong> 조리 시 주어지는 시험 시간으로 맞는 것은?`, correct: dish.t,
+        wrongs: makeWrongs(dish.t, dish) });
+
+    // 규격 (3문제)
+    if (dish.s) {
+        pool.push({ type:'mcq', tag:'📐 규격', q:`<strong>${dish.n}</strong>의 완성 규격으로 올바른 것은?`, correct: dish.s,
+            wrongs: makeWrongs(dish.s, dish) });
+        pool.push({ type:'mcq', tag:'📐 규격', q:`다음 중 <strong>${dish.n}</strong>의 크기 기준으로 정확한 것은?`, correct: dish.s,
+            wrongs: makeWrongs(dish.s, dish) });
+        pool.push({ type:'mcq', tag:'📐 규격', q:`<strong>${dish.n}</strong> 완성품의 치수로 올바른 것은?`, correct: dish.s,
+            wrongs: makeWrongs(dish.s, dish) });
+    }
+
+    // 요구사항 (각 항목별)
+    (dish.r || []).forEach((r, i) => {
+        pool.push({ type:'mcq', tag:'📋 요구사항', q:`<strong>${dish.n}</strong>의 올바른 요구사항은? (${i+1}번째 항목)`, correct: r,
+            wrongs: makeWrongs(r, dish) });
+        pool.push({ type:'mcq', tag:'📋 요구사항', q:`다음 중 <strong>${dish.n}</strong> 요구사항으로 맞는 것은?`, correct: r,
+            wrongs: makeWrongs(r, dish) });
+    });
+
+    // 유의사항 (각 항목별)
+    (dish.c || []).forEach((c, i) => {
+        pool.push({ type:'mcq', tag:'⚠️ 유의사항', q:`<strong>${dish.n}</strong>의 올바른 유의사항은?`, correct: c,
+            wrongs: makeWrongs(c, dish) });
+    });
+
+    // 조리 순서 내용 (각 단계별 MCQ)
+    (dish.q || []).forEach((step, i) => {
+        const seasoning = /큰술|작은술|간장|설탕|식초|참기름|고춧가루|소금|고추장|비율/.test(step);
+        const tag = seasoning ? '🧂 양념·재료' : '🍳 조리과정';
+        pool.push({ type:'mcq', tag, q:`<strong>${dish.n}</strong> 조리 ${i+1}단계로 올바른 것은?`, correct: step,
+            wrongs: makeWrongs(step, dish) });
+        pool.push({ type:'mcq', tag, q:`다음 중 <strong>${dish.n}</strong>의 올바른 조리 내용은?`, correct: step,
+            wrongs: makeWrongs(step, dish) });
+    });
+
+
+    /* ── 2. OX 참/거짓 ── 약 15문제 */
+
+    // 시험시간 OX
+    const wrongTime = mutateNum(dish.t) || (dish.t === '20분' ? '25분' : '20분');
+    pool.push({ type:'ox', tag:'⊙ OX', q:`<strong>${dish.n}</strong>의 시험 시간은 <span class="hl">${dish.t}</span>이다.`, correct:true });
+    pool.push({ type:'ox', tag:'⊙ OX', q:`<strong>${dish.n}</strong>의 시험 시간은 <span class="hl">${wrongTime}</span>이다.`, correct:false });
+
+    // 규격 OX
+    if (dish.s) {
+        const wrongSpec = mutateNum(dish.s) || mutateNum(dish.s) || '규격 변형 없음';
+        pool.push({ type:'ox', tag:'⊙ OX', q:`<strong>${dish.n}</strong>의 완성 규격은 <span class="hl">${dish.s}</span>이다.`, correct:true });
+        if (wrongSpec && wrongSpec !== dish.s) {
+            pool.push({ type:'ox', tag:'⊙ OX', q:`<strong>${dish.n}</strong>의 완성 규격은 <span class="hl">${wrongSpec}</span>이다.`, correct:false });
+        }
+    }
+
+    // 유의사항 OX
+    shuffle(dish.c || []).slice(0, 3).forEach(c => {
+        const wrong = mutateWord(c) || mutateSuffix(c) || mutateNum(c);
+        pool.push({ type:'ox', tag:'⊙ OX', q:`다음 설명이 맞으면 O, 틀리면 X를 선택하세요:<br>"${hl(c)}"`, correct:true });
+        if (wrong && wrong !== c) {
+            pool.push({ type:'ox', tag:'⊙ OX', q:`다음 설명이 맞으면 O, 틀리면 X를 선택하세요:<br>"${hl(wrong)}"`, correct:false });
+        }
+    });
+
+    // 조리 과정 OX
+    shuffle(dish.q || []).slice(0, 4).forEach(step => {
+        const wrong = mutateWord(step) || mutateSuffix(step) || mutateNum(step);
+        pool.push({ type:'ox', tag:'⊙ OX', q:`다음 조리 내용이 맞으면 O, 틀리면 X를 선택하세요:<br>"${hl(step)}"`, correct:true });
+        if (wrong && wrong !== step) {
+            pool.push({ type:'ox', tag:'⊙ OX', q:`다음 조리 내용이 맞으면 O, 틀리면 X를 선택하세요:<br>"${hl(wrong)}"`, correct:false });
+        }
+    });
+
+
+    /* ── 3. 빈칸 채우기 ── 약 15문제 */
+
+    // 시험시간 빈칸
+    pool.push({ type:'fill', tag:'▫ 빈칸', q:`<strong>${dish.n}</strong>의 시험 시간은 ( ___ ) 이다.`,
+        correct: dish.t, hint:`${dish.t.replace(/\d/g,'?')}` });
+
+    // 규격 빈칸
+    if (dish.s) {
+        pool.push({ type:'fill', tag:'▫ 빈칸', q:`<strong>${dish.n}</strong>의 완성 규격은 ( ___ ) 이다.`,
+            correct: dish.s, hint:'' });
+    }
+
+    // 조리 단계 빈칸 (핵심 숫자 부분)
+    (dish.q || []).forEach(step => {
+        const numMatch = step.match(/(\d+(\.\d+)?)\s*(cm|g|분|큰술|작은술|컵|℃)/);
+        if (numMatch) {
+            const keyword = numMatch[0];
+            const blank = step.replace(keyword, '( ___ )');
+            if (blank !== step) {
+                pool.push({ type:'fill', tag:'▫ 빈칸', q:`<strong>${dish.n}</strong> 조리 과정의 빈칸을 채우세요:<br>"${hl(blank)}"`,
+                    correct: keyword, hint:`숫자+단위 형식 (예: ${keyword[0]}??${keyword.slice(-2)})` });
+            }
+        }
+        // 핵심 재료 빈칸
+        const ingMatch = step.match(/(간장|소금|참기름|고추장|고춧가루|설탕|식초|깨소금|새우젓|국간장|후춧가루)/);
+        if (ingMatch) {
+            const keyword = ingMatch[0];
+            const blank = step.replace(new RegExp(keyword, 'g'), '( ___ )');
+            if (blank !== step) {
+                pool.push({ type:'fill', tag:'▫ 빈칸', q:`<strong>${dish.n}</strong> 조리 과정의 빈칸을 채우세요:<br>"${hl(blank)}"`,
+                    correct: keyword, hint:`양념 재료 이름` });
+            }
+        }
+    });
+
+    // 요구사항 빈칸
+    (dish.r || []).forEach(r => {
+        const numMatch = r.match(/(\d+(\.\d+)?)\s*(cm|g|분|큰술|작은술|컵|개|쪽)/);
+        if (numMatch) {
+            const keyword = numMatch[0];
+            const blank = r.replace(keyword, '( ___ )');
+            if (blank !== r) {
+                pool.push({ type:'fill', tag:'▫ 빈칸', q:`<strong>${dish.n}</strong> 요구사항의 빈칸을 채우세요:<br>"${hl(blank)}"`,
+                    correct: keyword, hint:`` });
+            }
+        }
+    });
+
+    // 유의사항 빈칸
+    shuffle(dish.c || []).slice(0, 2).forEach(c => {
+        const numMatch = c.match(/(\d+(\.\d+)?)\s*(cm|g|℃|분|큰술|작은술|컵)/);
+        if (numMatch) {
+            const keyword = numMatch[0];
+            const blank = c.replace(keyword, '( ___ )');
+            if (blank !== c) {
+                pool.push({ type:'fill', tag:'▫ 빈칸', q:`<strong>${dish.n}</strong> 유의사항의 빈칸을 채우세요:<br>"${hl(blank)}"`,
+                    correct: keyword, hint:`` });
+            }
+        }
+    });
+
+
+    /* ── 4. 순서 맞추기 (조리 단계 묶음) ── 약 10문제 */
+    const steps = dish.q || [];
+    if (steps.length >= 3) {
+        // 전체 순서 (항상 포함)
+        pool.push({ type:'order', tag:'⬡ 순서', q:`<strong>${dish.n}</strong>의 전체 조리 순서를 맞추세요.`,
+            steps: [...steps] });
+
+        // 3~4개씩 묶어서 부분 순서 문제
+        for (let start = 0; start + 2 < steps.length; start += 2) {
+            const chunk = steps.slice(start, Math.min(start + 4, steps.length));
+            if (chunk.length >= 3) {
+                pool.push({ type:'order', tag:'⬡ 순서', q:`<strong>${dish.n}</strong> 조리 중 ${start+1}~${start+chunk.length}단계의 순서를 맞추세요.`,
+                    steps: chunk });
+            }
+        }
+
+        // 처음 4개 / 마지막 4개
+        if (steps.length >= 5) {
+            pool.push({ type:'order', tag:'⬡ 순서', q:`<strong>${dish.n}</strong>의 초반 조리 단계 순서를 맞추세요.`,
+                steps: steps.slice(0, Math.min(4, steps.length)) });
+            pool.push({ type:'order', tag:'⬡ 순서', q:`<strong>${dish.n}</strong>의 후반 조리 단계 순서를 맞추세요.`,
+                steps: steps.slice(-Math.min(4, steps.length)) });
+        }
+    }
+
+    return pool;
+}
+
+/* ════════════════════════════════════════
+   랜덤 10문제 추출 (완전 랜덤)
+════════════════════════════════════════ */
+function pickTenQuestions(pool) {
+    // 60개 풀에서 완전 무작위로 10개 추출
+    return shuffle(pool).slice(0, 10);
+}
+
+/* ════════════════════════════════════════
+   퀴즈 탭 렌더
+════════════════════════════════════════ */
+function renderQuizTab() {
+    quizSession = { total:0, correct:0, wrong:0, byType:{ mcq:{t:0,c:0}, ox:{t:0,c:0}, fill:{t:0,c:0}, order:{t:0,c:0} } };
+    updateQuizHeader();
+
     const wrap = document.getElementById('quiz-questions-wrap');
     wrap.innerHTML = '';
     document.getElementById('quiz-final-result').style.display = 'none';
-    quizTotal = 0; quizCorrect = 0; quizWrong = 0;
-    updateProgress();
 
-    /* 문제 목록 구성 */
-    const questions = [];
+    const pool = buildQuestionPool(currentDish);
+    const questions = pickTenQuestions(pool);
 
-    /* 1. 시험 시간 (1문제) */
-    questions.push({ type:'시험시간', title:'⏱ 시험 시간', correct: currentDish.t,
-        q:`<strong>${currentDish.n}</strong>의 시험 시간은?` });
-
-    /* 2. 규격 (2문제 - 변형 2회) */
-    questions.push({ type:'규격', title:'📐 완성 규격 ①', correct: currentDish.s,
-        q:`<strong>${currentDish.n}</strong>의 완성 규격(크기)으로 올바른 것은?` });
-    if (currentDish.s) {
-        const s2 = mutateNumbers(currentDish.s) || currentDish.s;
-        questions.push({ type:'규격', title:'📐 완성 규격 ②', correct: currentDish.s,
-            q:`다음 보기 중 <strong>${currentDish.n}</strong>의 정확한 크기 기준은?` });
-    }
-
-    /* 3. 요구사항 (최대 3문제 - 항목마다 1문제) */
-    const reqs = currentDish.r || [];
-    const reqPick = [...reqs].sort(() => Math.random() - 0.5).slice(0, 3);
-    reqPick.forEach((r, i) => {
-        questions.push({ type:'요구사항', title:`📋 요구사항 ${i+1}`, correct: r,
-            q:`다음 중 <strong>${currentDish.n}</strong>의 올바른 요구사항은?` });
-    });
-
-    /* 4. 유의사항 (최대 3문제) */
-    const chks = currentDish.c || [];
-    const chkPick = [...chks].sort(() => Math.random() - 0.5).slice(0, 3);
-    chkPick.forEach((c, i) => {
-        questions.push({ type:'유의사항', title:`⚠️ 유의사항 ${i+1}`, correct: c,
-            q:`다음 중 <strong>${currentDish.n}</strong>의 올바른 유의사항은?` });
-    });
-
-    /* 5. 양념 비율 (최대 3문제) */
-    const seasonings = extractSeasoningSteps(currentDish);
-    const seaPick = [...seasonings].sort(() => Math.random() - 0.5).slice(0, 3);
-    seaPick.forEach((s, i) => {
-        questions.push({ type:'양념비율', title:`🧂 양념/재료 ${i+1}`, correct: s,
-            q:`다음 중 <strong>${currentDish.n}</strong>의 올바른 양념·재료 내용은?` });
-    });
-
-    /* 문제 수 부족 시 조리순서 문장으로 보완 (15문제 목표, 순서문제 제외 14문제) */
-    const stepSentences = [...(currentDish.q || [])].sort(() => Math.random() - 0.5);
-    let extraIdx = 0;
-    while (questions.length < 14 && extraIdx < stepSentences.length) {
-        const sent = stepSentences[extraIdx++];
-        questions.push({ type:'조리내용', title:`🍳 조리 내용 ${extraIdx}`, correct: sent,
-            q:`다음 중 <strong>${currentDish.n}</strong> 조리 과정으로 올바른 것은?` });
-    }
-
-    /* 문제 섞기 */
-    questions.sort(() => Math.random() - 0.5);
-
-    /* 각 문제 렌더링 */
-    questions.slice(0, 14).forEach((qObj, idx) => {
-        const cid = 'qbox-' + idx;
+    questions.forEach((qObj, idx) => {
+        const cid = 'q_' + idx;
         const box = document.createElement('div');
         box.className = 'quiz-box';
         box.id = cid;
         wrap.appendChild(box);
-        buildMCQSmart(cid, `Q${idx+1}. ${qObj.title}`, qObj.correct, currentDish, qObj.type, qObj.q,
-            function(isCorrect) {
-                quizTotal++;
-                if (isCorrect) quizCorrect++; else quizWrong++;
-                updateProgress();
-            });
-    });
 
-    /* 조리 순서 맞추기 (Q15) */
-    expectedStep = 0;
-    currentSequence = [...(currentDish.q || [])];
-    document.getElementById('answer-list').innerHTML = '';
-    const seqRes = document.getElementById('seq-result');
-    seqRes.className = 'quiz-result';
-    seqRes.innerHTML = '';
-    seqRes.style.display = 'none';
-    document.getElementById('seq-retry-btn').style.display = 'none';
+        const onDone = (isOk) => {
+            quizSession.total++;
+            if (isOk) quizSession.correct++; else quizSession.wrong++;
+            if (quizSession.byType[qObj.type]) {
+                quizSession.byType[qObj.type].t++;
+                if (isOk) quizSession.byType[qObj.type].c++;
+            }
+            updateQuizHeader();
+            if (quizSession.total >= 10) showFinalResult();
+        };
 
-    const seqBox = document.getElementById('quiz-seq-box');
-    const seqTitle = seqBox.querySelector('.quiz-title');
-    if (seqTitle) seqTitle.innerHTML = `<i class="fa-solid fa-arrow-down-1-9"></i> Q${Math.min(questions.length+1,15)}. 🔢 조리 순서 맞추기`;
-
-    const optWrap = document.getElementById('options-container');
-    optWrap.innerHTML = '';
-    [...currentSequence].sort(() => Math.random() - 0.5).forEach(step => {
-        const btn = document.createElement('button');
-        btn.className = 'step-btn';
-        btn.innerHTML = hl(step);
-        btn.onclick = () => checkSequence(btn, step, function(isCorrect) {
-            if (isCorrect) { quizTotal++; quizCorrect++; updateProgress(); }
-        });
-        optWrap.appendChild(btn);
+        if (qObj.type === 'mcq') renderMCQ(box, idx, qObj, onDone);
+        else if (qObj.type === 'ox') renderOX(box, idx, qObj, onDone);
+        else if (qObj.type === 'fill') renderFill(box, idx, qObj, onDone);
+        else if (qObj.type === 'order') renderOrder(box, idx, qObj, onDone);
     });
 }
 
-/* ─── buildMCQSmart: 같은 품목 변형 오답 사용 ─── */
-function buildMCQSmart(containerId, title, correct, dish, type, questionText, onAnswered) {
-    const box = document.getElementById(containerId);
-    if (!box) return;
-    if (!correct) {
-        box.innerHTML = `<div class="quiz-title">${title}</div>
-            <p class="quiz-hint" style="color:var(--text3);">이 품목은 해당 퀴즈가 없습니다.</p>`;
-        return;
-    }
+function updateQuizHeader() {
+    const pct = quizSession.total > 0 ? Math.round((quizSession.total / 10) * 100) : 0;
+    document.getElementById('quiz-progress-text').textContent = quizSession.total + ' / 10';
+    document.getElementById('quiz-progress-bar').style.width = pct + '%';
+    document.getElementById('quiz-correct-count').textContent = quizSession.correct;
+    document.getElementById('quiz-wrong-count').textContent = quizSession.wrong;
+}
 
-    let wrongs = makeWrongOptions(correct, dish, type);
+function showFinalResult() {
+    const fr = document.getElementById('quiz-final-result');
+    fr.style.display = 'block';
+    fr.scrollIntoView({ behavior:'smooth' });
+    const pct = Math.round((quizSession.correct / 10) * 100);
+    document.getElementById('quiz-final-emoji').textContent = pct >= 90 ? '🏆' : pct >= 70 ? '👍' : pct >= 50 ? '📖' : '💪';
+    document.getElementById('quiz-final-score').textContent = `10문제 중 ${quizSession.correct}문제 정답 (${pct}%)`;
+    document.getElementById('quiz-final-msg').textContent = pct >= 90 ? '완벽합니다! 이 품목을 완전히 숙지했습니다.' :
+        pct >= 70 ? '좋아요! 틀린 문제를 이론에서 다시 확인하세요.' :
+        pct >= 50 ? '이론을 한 번 더 읽고 다시 도전해보세요.' :
+        '이론 학습부터 차근차근 다시 시작해보세요.';
 
-    /* 변형 오답이 3개 미만일 경우 — 같은 유형 다른 품목 내용으로 보완 (최후 수단) */
-    if (wrongs.length < 3) {
-        let fallback = [];
-        if (type === '시험시간') fallback = rawData.map(d => d.t);
-        else if (type === '규격')   fallback = rawData.map(d => d.s);
-        else if (type === '요구사항') fallback = rawData.flatMap(d => d.r || []);
-        else if (type === '유의사항') fallback = rawData.flatMap(d => d.c || []);
-        else if (type === '양념비율') fallback = rawData.flatMap(d => extractSeasoningSteps(d));
-        const extra = fallback.filter(x => x && x !== correct && !wrongs.includes(x))
-            .sort(() => Math.random() - 0.5);
-        wrongs = [...wrongs, ...extra].slice(0, 3);
-    }
-
-    const options = [correct, ...wrongs.slice(0, 3)].sort(() => Math.random() - 0.5);
-    const safeType = type.replace(/'/g, '');
-
-    const btns = options.map(opt => {
-        const isOk = opt === correct ? '1' : '0';
-        return `<button class="mcq-btn" data-correct="${isOk}"
-            onclick="handleMCQ(this,'${safeType}','${containerId}')">${hl(opt)}</button>`;
+    const bt = quizSession.byType;
+    const typeNames = { mcq:'객관식', ox:'OX', fill:'빈칸', order:'순서' };
+    const colors = { mcq:'var(--accent)', ox:'var(--green)', fill:'var(--orange)', order:'var(--accent2)' };
+    document.getElementById('quiz-type-summary').innerHTML = Object.keys(bt).map(k => {
+        if (!bt[k].t) return '';
+        return `<div class="type-cell">
+            <div class="type-cell-label">${typeNames[k]}</div>
+            <div class="type-cell-val" style="color:${colors[k]};">${bt[k].c}/${bt[k].t}</div>
+        </div>`;
     }).join('');
+}
 
-    /* 콜백 전역 맵에 저장 */
-    if (onAnswered) window._quizCbs = window._quizCbs || {};
-    if (onAnswered) window._quizCbs[containerId] = onAnswered;
+/* ════════════════════════════════════════
+   문제 유형별 렌더러
+════════════════════════════════════════ */
 
+/* ── MCQ ── */
+function renderMCQ(box, idx, qObj, onDone) {
+    let wrongs = qObj.wrongs || [];
+    // 오답이 부족하면 같은 품목 내에서 추가 생성 (다른 품목 절대 사용 안 함)
+    if (wrongs.length < 3) {
+        const extra = makeWrongs(qObj.correct, currentDish);
+        const merged = [...new Set([...wrongs, ...extra])].filter(x => x !== qObj.correct);
+        wrongs = merged.slice(0, 3);
+    }
+    const opts = shuffle([qObj.correct, ...wrongs.slice(0,3)]);
     box.innerHTML = `
-        <div class="quiz-title">${title}</div>
-        <p class="quiz-hint">${questionText}</p>
-        <div class="mcq-wrap" data-solved="0">${btns}</div>
-        <div class="quiz-result" id="res-${containerId}"></div>
-        <button class="retry-study-btn" id="retry-${containerId}" onclick="showReview('${containerId}')">
-            <i class="fa-solid fa-rotate-left"></i> 오답 → 이론 다시 보기 (클릭)
-        </button>
-        <div class="review-panel" id="panel-${containerId}">
-            <div class="review-panel-title"><i class="fa-solid fa-lightbulb"></i> 정답 내용</div>
-            <p>${hl(correct)}</p>
-            <button class="btn btn-outline" style="margin-top:10px; font-size:13px;" onclick="switchTab('study')">
-                <i class="fa-solid fa-book-open"></i> 이론 학습 탭으로 이동
+        <span class="quiz-type-badge badge-mcq">▣ 객관식</span>
+        <div class="q-num">Q${idx+1}</div>
+        <div class="quiz-question">${qObj.q}</div>
+        <div class="mcq-options" data-solved="0">
+            ${opts.map(o => `<button class="mcq-btn" data-ok="${o===qObj.correct?1:0}" onclick="handleMCQ(this,'${box.id}')">${hl(o)}</button>`).join('')}
+        </div>
+        <div class="quiz-result" id="res_${box.id}"></div>
+        <div class="answer-panel" id="ap_${box.id}">
+            <div class="answer-panel-title">✅ 정답 해설</div>
+            <p>${hl(qObj.correct)}</p>
+            <button class="btn btn-outline" style="margin-top:10px;font-size:13px;" onclick="switchTab('study')">
+                <i class="fa-solid fa-book-open"></i> 이론 학습으로 이동
             </button>
         </div>`;
 }
 
-function handleMCQ(btn, type, containerId) {
-    const wrap = btn.closest('.mcq-wrap');
+function handleMCQ(btn, bid) {
+    const wrap = btn.closest('.mcq-options');
     if (!wrap || wrap.dataset.solved === '1') return;
     wrap.dataset.solved = '1';
-
-    const isOk = btn.dataset.correct === '1';
+    const isOk = btn.dataset.ok === '1';
     wrap.querySelectorAll('.mcq-btn').forEach(b => {
-        b.disabled = true;
-        b.style.opacity = '0.45';
-        if (b.dataset.correct === '1') {
-            b.style.opacity = '1';
-            b.classList.add('reveal');
-        }
+        b.disabled = true; b.style.opacity = '0.45';
+        if (b.dataset.ok === '1') { b.style.opacity = '1'; b.classList.add('reveal'); }
     });
     btn.style.opacity = '1';
-
-    const resEl    = document.getElementById('res-' + containerId);
-    const retryBtn = document.getElementById('retry-' + containerId);
-
+    const res = document.getElementById('res_' + bid);
+    const ap  = document.getElementById('ap_'  + bid);
     if (isOk) {
-        btn.classList.remove('reveal');
-        btn.classList.add('correct');
-        resEl.innerHTML = '<i class="fa-solid fa-circle-check"></i> 정답입니다! 👍';
-        resEl.className = 'quiz-result ok';
-        resEl.style.display = 'block';
-        recordAnswer(true, type);
-        if (window._quizCbs && window._quizCbs[containerId]) window._quizCbs[containerId](true);
+        btn.classList.remove('reveal'); btn.classList.add('correct');
+        res.innerHTML = '<i class="fa-solid fa-circle-check"></i> 정답입니다! 👍';
+        res.className = 'quiz-result ok';
+        recordAnswer(true, 'mcq');
+        if (ap) ap.style.display = 'none';
+        if (window._qcbs && window._qcbs[bid]) window._qcbs[bid](true);
     } else {
         btn.classList.add('wrong');
-        resEl.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> 오답입니다. 아래 버튼으로 이론을 확인하세요.';
-        resEl.className = 'quiz-result ng';
-        resEl.style.display = 'block';
-        if (retryBtn) retryBtn.style.display = 'block';
-        recordAnswer(false, type);
-        if (window._quizCbs && window._quizCbs[containerId]) window._quizCbs[containerId](false);
+        res.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> 오답! 아래에서 정답을 확인하세요.';
+        res.className = 'quiz-result ng';
+        if (ap) ap.classList.add('show');
+        recordAnswer(false, 'mcq');
+        if (window._qcbs && window._qcbs[bid]) window._qcbs[bid](false);
     }
 }
+// 콜백 저장
+window._qcbs = {};
 
-function showReview(id) {
-    if (id === 'seq') {
-        /* 순서 오답: 이론 탭으로 이동 후 퀴즈 리셋 */
-        switchTab('study');
-        setTimeout(() => renderQuizTab(), 400);
-        return;
-    }
-    const panel = document.getElementById('panel-' + id);
-    if (!panel) return;
-    /* 토글: 열기/닫기 */
-    if (panel.classList.contains('active')) {
-        panel.classList.remove('active');
+/* ── OX ── */
+function renderOX(box, idx, qObj, onDone) {
+    window._qcbs[box.id] = onDone;
+    box.innerHTML = `
+        <span class="quiz-type-badge badge-ox">⊙ OX 판단</span>
+        <div class="q-num">Q${idx+1}</div>
+        <div class="quiz-question">${qObj.q}</div>
+        <div class="ox-wrap" data-solved="0">
+            <button class="btn-ox btn-ox-o" onclick="handleOX(this,'${box.id}',true,${qObj.correct})">⭕ 맞다</button>
+            <button class="btn-ox btn-ox-x" onclick="handleOX(this,'${box.id}',false,${qObj.correct})">❌ 틀리다</button>
+        </div>
+        <div class="quiz-result" id="res_${box.id}"></div>
+        <div class="answer-panel" id="ap_${box.id}">
+            <div class="answer-panel-title">✅ 정답: ${qObj.correct ? '⭕ 맞다' : '❌ 틀리다'}</div>
+            <p style="margin-top:6px;font-size:13px;color:var(--text2);">이론 탭에서 해당 내용을 다시 확인하세요.</p>
+            <button class="btn btn-outline" style="margin-top:10px;font-size:13px;" onclick="switchTab('study')">
+                <i class="fa-solid fa-book-open"></i> 이론 학습으로 이동
+            </button>
+        </div>`;
+}
+
+function handleOX(btn, bid, chosen, correct) {
+    const wrap = btn.closest('.ox-wrap');
+    if (!wrap || wrap.dataset.solved === '1') return;
+    wrap.dataset.solved = '1';
+    wrap.querySelectorAll('.btn-ox').forEach(b => { b.disabled = true; b.style.opacity = '0.45'; });
+    btn.style.opacity = '1';
+    const isOk = (chosen === correct);
+    const res = document.getElementById('res_' + bid);
+    const ap  = document.getElementById('ap_'  + bid);
+    if (isOk) {
+        res.innerHTML = `<i class="fa-solid fa-circle-check"></i> 정답입니다! ${chosen ? '⭕ 맞다' : '❌ 틀리다'} 👍`;
+        res.className = 'quiz-result ok';
+        if (ap) ap.style.display = 'none';
+        recordAnswer(true, 'ox');
     } else {
-        panel.classList.add('active');
-        /* 패널 위치로 스크롤 */
-        panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        res.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> 오답! 정답은 "${correct ? '⭕ 맞다' : '❌ 틀리다'}" 입니다.`;
+        res.className = 'quiz-result ng';
+        if (ap) ap.classList.add('show');
+        recordAnswer(false, 'ox');
     }
+    if (window._qcbs && window._qcbs[bid]) window._qcbs[bid](isOk);
 }
 
-function checkSequence(btn, step, seqCb) {
+/* ── 빈칸 채우기 ── */
+function renderFill(box, idx, qObj, onDone) {
+    window._qcbs[box.id] = onDone;
+    const fid = 'fill_' + box.id;
+    box.innerHTML = `
+        <span class="quiz-type-badge badge-fill">▫ 빈칸 채우기</span>
+        <div class="q-num">Q${idx+1}</div>
+        <div class="quiz-question">${qObj.q}</div>
+        ${qObj.hint ? `<p style="font-size:12px;color:var(--text3);margin-bottom:6px;">힌트: ${qObj.hint}</p>` : ''}
+        <input type="text" id="${fid}" class="fill-input" placeholder="정답을 입력하세요" autocomplete="off" autocorrect="off">
+        <button class="fill-submit" onclick="handleFill('${fid}','${box.id}','${qObj.correct.replace(/'/g,"\\'")}')">
+            <i class="fa-solid fa-check"></i> 정답 확인
+        </button>
+        <div class="quiz-result" id="res_${box.id}"></div>
+        <div class="fill-answer-reveal" id="ar_${box.id}">
+            ✅ 정답: <strong>${hl(qObj.correct)}</strong>
+        </div>`;
+
+    // Enter 키 지원
+    document.getElementById(fid)?.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') document.querySelector(`[onclick*="${fid}"]`)?.click();
+    });
+}
+
+function handleFill(fid, bid, correct) {
+    const input = document.getElementById(fid);
+    const res   = document.getElementById('res_' + bid);
+    const ar    = document.getElementById('ar_'  + bid);
+    if (!input || input.disabled) return;
+
+    const userVal = input.value.trim();
+    if (!userVal) { alert('정답을 입력해주세요.'); return; }
+
+    input.disabled = true;
+    document.querySelector(`[onclick*="${fid}"]`).disabled = true;
+
+    // 정답 판정: 숫자+단위 문제는 완전 일치, 텍스트는 포함 여부
+    const isNum = /^\d/.test(correct);
+    const isOk = isNum ? userVal.replace(/\s/g,'') === correct.replace(/\s/g,'') :
+        userVal.includes(correct) || correct.includes(userVal);
+
+    if (isOk) {
+        res.innerHTML = '<i class="fa-solid fa-circle-check"></i> 정답입니다! 👍';
+        res.className = 'quiz-result ok';
+        input.style.borderColor = 'var(--green)';
+        if (ar) ar.style.display = 'none';
+        recordAnswer(true, 'fill');
+    } else {
+        res.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> 오답입니다. 정답을 확인하세요.`;
+        res.className = 'quiz-result ng';
+        input.style.borderColor = 'var(--red)';
+        if (ar) ar.style.display = 'block';
+        recordAnswer(false, 'fill');
+    }
+    if (window._qcbs && window._qcbs[bid]) window._qcbs[bid](isOk);
+}
+
+/* ── 순서 맞추기 ── */
+function renderOrder(box, idx, qObj, onDone) {
+    window._qcbs[box.id] = onDone;
+    const steps = qObj.steps || [];
+    const shuffled = shuffle(steps);
+    let expected = 0;
+    let wrongCount = 0;
+
+    box.innerHTML = `
+        <span class="quiz-type-badge badge-order">⬡ 순서 맞추기</span>
+        <div class="q-num">Q${idx+1}</div>
+        <div class="quiz-question">${qObj.q}</div>
+        <p style="font-size:12px;color:var(--text3);margin-bottom:12px;">섞여 있는 단계를 올바른 순서대로 터치하세요.</p>
+        <div id="opts_${box.id}">
+            ${shuffled.map((s,i) => `<button class="step-btn" id="sb_${box.id}_${i}" onclick="handleOrderStep(this,'${box.id}',${i})">${hl(s)}</button>`).join('')}
+        </div>
+        <div class="answer-slots" id="slots_${box.id}"></div>
+        <div class="quiz-result" id="res_${box.id}"></div>`;
+
+    // 순서 데이터 저장 (전역)
+    window._orderData = window._orderData || {};
+    window._orderData[box.id] = { steps, shuffled, expected:0, wrongCount:0, onDone, done:false };
+}
+
+function handleOrderStep(btn, bid, btnIdx) {
+    const od = window._orderData[bid];
+    if (!od || od.done) return;
     if (btn.classList.contains('used')) return;
-    if (step === currentSequence[expectedStep]) {
+
+    const chosen = od.shuffled[btnIdx];
+    const correctStep = od.steps[od.expected];
+
+    if (chosen === correctStep) {
         btn.classList.add('used');
-        const li = document.createElement('li');
-        li.innerHTML = hl(step);
-        document.getElementById('answer-list').appendChild(li);
-        expectedStep++;
-        if (expectedStep === currentSequence.length) {
-            const res = document.getElementById('seq-result');
-            res.innerHTML = '<i class="fa-solid fa-circle-check"></i> 완벽합니다! 모든 순서를 맞췄습니다.';
+        od.expected++;
+        const slots = document.getElementById('slots_' + bid);
+        const slot = document.createElement('div');
+        slot.className = 'answer-slot';
+        slot.setAttribute('data-num', od.expected);
+        slot.innerHTML = hl(chosen);
+        slots.appendChild(slot);
+
+        if (od.expected === od.steps.length) {
+            const res = document.getElementById('res_' + bid);
+            const perfect = od.wrongCount === 0;
+            res.innerHTML = perfect
+                ? '<i class="fa-solid fa-circle-check"></i> 완벽합니다! 모든 순서를 맞췄습니다. 🎉'
+                : `<i class="fa-solid fa-circle-check"></i> 완료! (오답 ${od.wrongCount}회 있었음)`;
             res.className = 'quiz-result ok';
-            res.style.display = 'block';
-            recordAnswer(true, '조리순서');
+            od.done = true;
+            recordAnswer(perfect, 'order');
+            if (od.onDone) od.onDone(perfect);
         }
     } else {
-        const res = document.getElementById('seq-result');
-        res.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> 순서가 틀렸습니다. 다시 생각해보세요!';
+        od.wrongCount++;
+        btn.classList.add('wrong-step');
+        const res = document.getElementById('res_' + bid);
+        res.innerHTML = `<i class="fa-solid fa-circle-xmark"></i> 순서가 틀렸습니다! 다시 생각해보세요.`;
         res.className = 'quiz-result ng';
-        res.style.display = 'block';
-        document.getElementById('seq-retry-btn').style.display = 'block';
-        recordAnswer(false, '조리순서');
+        setTimeout(() => {
+            btn.classList.remove('wrong-step');
+            res.innerHTML = '';
+            res.className = 'quiz-result';
+        }, 1200);
     }
 }
 
-/* ─────────────────────────────────────────────
+/* ════════════════════════════════════════
    관리자
-───────────────────────────────────────────── */
+════════════════════════════════════════ */
 function showAdminLogin() {
     document.getElementById('admin-pwd-input').value = '';
     document.getElementById('modal-admin').classList.add('active');
 }
-function closeModal(id) {
-    document.getElementById(id).classList.remove('active');
-}
+function closeModal(id) { document.getElementById(id).classList.remove('active'); }
 function handleAdminLogin() {
     const pwd = document.getElementById('admin-pwd-input').value.trim();
-    if (pwd === getAdminPwd()) {
-        closeModal('modal-admin');
-        renderAdminScreen();
-        showScreen('screen-admin');
-    } else {
-        alert('비밀번호가 올바르지 않습니다.');
-    }
+    if (pwd === getAdminPwd()) { closeModal('modal-admin'); renderAdminScreen(); showScreen('screen-admin'); }
+    else alert('비밀번호가 올바르지 않습니다.');
 }
-
 function renderAdminScreen() {
     const db = getDB();
     document.getElementById('admin-total-students').innerText = db.length;
     document.getElementById('admin-total-q').innerText = db.reduce((a, u) => a + (u.totalQuestions || 0), 0);
     renderAdminTable();
 }
-
 function renderAdminTable() {
     let db = getDB();
     const q = (document.getElementById('admin-search')?.value || '').toLowerCase();
     if (q) db = db.filter(u => u.name.includes(q) || u.id.includes(q));
-
     db.sort((a, b) => {
         let va = a[sortState.key] || 0, vb = b[sortState.key] || 0;
-        if (typeof va === 'string') va = va || '';
-        if (typeof vb === 'string') vb = vb || '';
-        if (sortState.key === 'accuracy') {
-            va = a.totalQuestions > 0 ? a.correctCount / a.totalQuestions : 0;
-            vb = b.totalQuestions > 0 ? b.correctCount / b.totalQuestions : 0;
-        }
-        if (sortState.key === 'studiedDishes') {
-            va = (a.studiedDishes || []).length;
-            vb = (b.studiedDishes || []).length;
-        }
+        if (sortState.key === 'accuracy') { va = a.totalQuestions > 0 ? a.correctCount / a.totalQuestions : 0; vb = b.totalQuestions > 0 ? b.correctCount / b.totalQuestions : 0; }
+        if (sortState.key === 'studiedDishes') { va = (a.studiedDishes||[]).length; vb = (b.studiedDishes||[]).length; }
         return sortState.asc ? (va > vb ? 1 : -1) : (va < vb ? 1 : -1);
     });
-
     const tbody = document.getElementById('admin-tbody');
     tbody.innerHTML = db.map((u, i) => {
         const acc = u.totalQuestions > 0 ? Math.round((u.correctCount / u.totalQuestions) * 100) : 0;
         const last = u.lastStudyAt ? new Date(u.lastStudyAt).toLocaleDateString('ko-KR') : '–';
-        const studied = (u.studiedDishes || []).length;
         return `<tr>
-            <td>${i + 1}</td>
+            <td>${i+1}</td>
             <td><strong style="color:#fff;">${u.name}</strong></td>
             <td>${u.id}</td>
-            <td>${u.totalQuestions || 0}</td>
-            <td style="color:var(--green);">${u.correctCount || 0}</td>
-            <td><span class="badge ${acc >= 70 ? 'badge-green' : 'badge-red'}">${acc}%</span></td>
-            <td>${studied} / 33</td>
+            <td>${u.totalQuestions||0}</td>
+            <td style="color:var(--green);">${u.correctCount||0}</td>
+            <td><span class="badge ${acc>=70?'badge-green':'badge-red'}">${acc}%</span></td>
+            <td>${(u.studiedDishes||[]).length} / 33</td>
             <td>${last}</td>
         </tr>`;
     }).join('') || '<tr><td colspan="8" style="color:var(--text3);">등록된 학생이 없습니다.</td></tr>';
 }
-
 function sortStudents(key) {
     if (sortState.key === key) sortState.asc = !sortState.asc;
     else { sortState.key = key; sortState.asc = false; }
     renderAdminTable();
 }
-
 function changeAdminPassword() {
-    document.getElementById('admin-cur-pwd').value = '';
-    document.getElementById('admin-new-pwd').value = '';
-    document.getElementById('admin-new-pwd2').value = '';
+    ['admin-cur-pwd','admin-new-pwd','admin-new-pwd2'].forEach(k => document.getElementById(k).value = '');
     document.getElementById('modal-change-pwd').classList.add('active');
 }
-
 function doChangeAdminPassword() {
-    const cur  = document.getElementById('admin-cur-pwd').value.trim();
-    const np   = document.getElementById('admin-new-pwd').value.trim();
-    const np2  = document.getElementById('admin-new-pwd2').value.trim();
+    const cur = document.getElementById('admin-cur-pwd').value.trim();
+    const np  = document.getElementById('admin-new-pwd').value.trim();
+    const np2 = document.getElementById('admin-new-pwd2').value.trim();
     if (cur !== getAdminPwd()) { alert('현재 비밀번호가 틀렸습니다.'); return; }
-    if (np.length < 4)         { alert('새 비밀번호는 4자 이상이어야 합니다.'); return; }
-    if (np !== np2)            { alert('새 비밀번호가 서로 일치하지 않습니다.'); return; }
-    setAdminPwd(np);
-    closeModal('modal-change-pwd');
-    alert('✅ 관리자 비밀번호가 변경되었습니다.');
+    if (np.length < 4) { alert('새 비밀번호는 4자 이상이어야 합니다.'); return; }
+    if (np !== np2) { alert('새 비밀번호가 서로 일치하지 않습니다.'); return; }
+    setAdminPwd(np); closeModal('modal-change-pwd'); alert('✅ 관리자 비밀번호가 변경되었습니다.');
 }
-
 function exportCSV() {
     const db = getDB();
-    const header = ['이름', '학번', '풀이수', '정답', '오답', '정답률', '학습품목수', '최근학습일'];
+    const header = ['이름','학번','풀이수','정답','오답','정답률','학습품목수','최근학습일'];
     const rows = db.map(u => {
         const acc = u.totalQuestions > 0 ? Math.round((u.correctCount / u.totalQuestions) * 100) : 0;
         const last = u.lastStudyAt ? new Date(u.lastStudyAt).toLocaleDateString('ko-KR') : '';
-        return [u.name, u.id, u.totalQuestions || 0, u.correctCount || 0, u.wrongCount || 0,
-                acc + '%', (u.studiedDishes || []).length, last].join(',');
+        return [u.name, u.id, u.totalQuestions||0, u.correctCount||0, u.wrongCount||0, acc+'%', (u.studiedDishes||[]).length, last].join(',');
     });
     const csv = '\uFEFF' + [header.join(','), ...rows].join('\n');
     const a = document.createElement('a');
-    a.href = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' }));
-    a.download = '학습현황_' + new Date().toLocaleDateString('ko-KR').replace(/\./g, '') + '.csv';
+    a.href = URL.createObjectURL(new Blob([csv], { type:'text/csv;charset=utf-8;' }));
+    a.download = '학습현황_' + new Date().toLocaleDateString('ko-KR').replace(/\./g,'') + '.csv';
     a.click();
 }
-
 function resetAllData() {
     if (!confirm('⚠️ 모든 학생 데이터를 삭제합니다.\n정말 초기화하시겠습니까?')) return;
-    localStorage.removeItem(DB_KEY);
-    alert('초기화되었습니다.');
-    renderAdminScreen();
+    localStorage.removeItem(DB_KEY); alert('초기화되었습니다.'); renderAdminScreen();
 }
 
-/* ─────────────────────────────────────────────
-   초기화
-───────────────────────────────────────────── */
-window.onload = () => {
-    showScreen('screen-login');
-};
+window.onload = () => { showScreen('screen-login'); };
 </script>
 </body>
-</html>
+</html>      
